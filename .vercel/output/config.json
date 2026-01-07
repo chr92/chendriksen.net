@@ -1,0 +1,82 @@
+{
+  "version": 3,
+  "overrides": {
+    "index.html": {
+      "path": ""
+    },
+    "about/index.html": {
+      "path": "about"
+    },
+    "contact/index.html": {
+      "path": "contact"
+    },
+    "current-projects/werewolves-of-london/index.html": {
+      "path": "current-projects/werewolves-of-london"
+    },
+    "current-projects/treeee/index.html": {
+      "path": "current-projects/treeee"
+    },
+    "current-projects/index.html": {
+      "path": "current-projects"
+    },
+    "current-projects/waiting-for-freedom/index.html": {
+      "path": "current-projects/waiting-for-freedom"
+    },
+    "previous-work/index.html": {
+      "path": "previous-work"
+    },
+    "previous-work/an-interview-with-philippe-gaulier/index.html": {
+      "path": "previous-work/an-interview-with-philippe-gaulier"
+    },
+    "previous-work/the-jazz-man/index.html": {
+      "path": "previous-work/the-jazz-man"
+    },
+    "previous-work/big-zeus-energy/index.html": {
+      "path": "previous-work/big-zeus-energy"
+    }
+  },
+  "routes": [
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/builds/meta/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=1, immutable"
+      },
+      "src": "/_nuxt/builds/(.*)"
+    },
+    {
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "src": "/_nuxt/(.*)"
+    },
+    {
+      "src": "/_nuxt/builds/meta(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt/builds(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/_nuxt(.*)",
+      "headers": {
+        "cache-control": "public,max-age=31536000,immutable"
+      },
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}
