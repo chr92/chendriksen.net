@@ -1,7 +1,7 @@
 ---
 title: "Big Zeus Energy"
 description: "High energy comedy."
-image: "/images/project_placeholder_1_1767788813115.png"
+image: "/images/bigzeusposter.png"
 ---
 
 # Big Zeus Energy

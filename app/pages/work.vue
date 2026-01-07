@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-const { data: projects } = await useAsyncData('work-items', () =>
+const { data: projects } = await useAsyncData('work-items-v2', () =>
   queryCollection('content')
     .where('path', 'LIKE', '/work/%')
     .where('path', '!=', '/work')

@@ -10,7 +10,7 @@ defineProps<{
     <div class="relative h-[60vh] w-full overflow-hidden">
       <div class="absolute inset-0">
          <img 
-            :src="page.image || '/images/project_placeholder_1_1767788813115.png'" 
+            :src="page.image || page.meta?.image" 
             :alt="page.title" 
             class="h-full w-full object-cover"
          />

@@ -1,11 +1,15 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   title: string
   description: string
   image?: string
   path: string
   role?: string
+  meta?: { image?: string }
 }>()
+
+// Nuxt Content stores custom frontmatter fields in meta object
+const imageUrl = props.image || props.meta?.image
 </script>
 
 <template>
@@ -13,7 +17,7 @@ defineProps<{
     <!-- Image -->
     <div class="aspect-[3/4] w-full overflow-hidden">
         <img 
-            :src="image || '/images/project_placeholder_1_1767788813115.png'" 
+            :src="imageUrl" 
             :alt="title" 
             class="h-full w-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110"
         />

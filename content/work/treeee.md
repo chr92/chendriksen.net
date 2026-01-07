@@ -1,9 +1,10 @@
 ---
 title: "Treeeee"
 description: "An experimental clown piece about nature."
-image: "/images/slideshow_placeholder_3_1767788794773.png"
+image: "/images/treeeeee-logo.jpg"
 ---
 
 # Treeeee
 
 Content coming soon...
+done

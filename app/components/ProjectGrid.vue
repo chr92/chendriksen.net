@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: projects } = await useAsyncData('projects-grid', () => 
+const { data: projects } = await useAsyncData('projects-grid-v2', () => 
   queryCollection('content')
     .where('path', 'LIKE', '/work/%')
     .limit(6)
