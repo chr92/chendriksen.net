@@ -45,35 +45,37 @@ useSeoMeta({
     <ProjectGrid />
 
     <!-- About Section -->
-    <section id="about" class="container py-32 scroll-mt-32">
-      <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
-        <!-- Content -->
-        <div class="order-2 lg:order-1">
-           <h2 class="mb-8 font-heading text-4xl font-bold text-white sm:text-5xl">About Me</h2>
-           <div class="prose prose-invert prose-lg max-w-none text-muted leading-relaxed">
-              <ContentRenderer v-if="page" :value="page" />
-              
-              <div class="mt-12 flex items-center gap-6">
-                 <NuxtLink to="https://www.instagram.com/chendriksen/" target="_blank" class="text-muted hover:text-primary transition-all hover:scale-110">
-                    <span class="sr-only">Instagram</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                </NuxtLink>
-                <NuxtLink to="https://www.youtube.com/@chendriksen" target="_blank" class="text-muted hover:text-primary transition-all hover:scale-110">
-                    <span class="sr-only">YouTube</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
-                </NuxtLink>
-              </div>
-           </div>
-        </div>
+    <section id="about" class="flex min-h-[calc(100vh-4rem)] items-start pt-8 pb-12 scroll-mt-16">
+      <div class="container">
+        <div class="grid gap-16 lg:grid-cols-2">
+          <!-- Content -->
+          <div class="order-2 lg:order-1">
+             <h2 class="mb-8 font-heading text-4xl font-bold text-white sm:text-5xl">About Me</h2>
+             <div class="prose prose-invert prose-lg max-w-none text-muted leading-relaxed">
+                <ContentRenderer v-if="page" :value="page" />
+                
+                <div class="mt-6 flex items-center gap-6">
+                   <NuxtLink to="https://www.instagram.com/chendriksen/" target="_blank" class="text-muted hover:text-primary transition-all hover:scale-110">
+                      <span class="sr-only">Instagram</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                  </NuxtLink>
+                  <NuxtLink to="https://www.youtube.com/@chendriksen" target="_blank" class="text-muted hover:text-primary transition-all hover:scale-110">
+                      <span class="sr-only">YouTube</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+                  </NuxtLink>
+                </div>
+             </div>
+          </div>
 
-        <!-- Portrait -->
-        <div class="order-1 lg:order-2 relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
-          <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-surface shadow-2xl ring-1 ring-white/10">
-             <img 
-               src="/images/christiaan.jpg" 
-               alt="Christiaan Hendriksen" 
-               class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-             />
+          <!-- Portrait -->
+          <div class="order-1 lg:order-2 relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto lg:mr-12">
+            <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-surface shadow-2xl ring-1 ring-white/10">
+               <img 
+                 src="/images/christiaan.jpg" 
+                 alt="Christiaan Hendriksen" 
+                 class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+               />
+            </div>
           </div>
         </div>
       </div>
