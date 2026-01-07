@@ -1,3 +1,4 @@
+<script setup lang="ts">
 const images = [
   '/images/home_slideshow/big_zeus.jpg',
   '/images/home_slideshow/big_zeus_2.jpg',
