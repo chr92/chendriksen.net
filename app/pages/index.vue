@@ -4,7 +4,7 @@
 const { data: page } = await useAsyncData('home-content', () => queryCollection('content').path('/homepage').first())
 
 useSeoMeta({
-  title: 'Home',
+  title: page.value?.title,
   description: page.value?.description,
 })
 </script>
