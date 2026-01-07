@@ -43,12 +43,80 @@
         <NuxtLink to="/contact" class="text-sm font-medium text-muted hover:text-primary transition-colors">Contact</NuxtLink>
       </nav>
       
-      <!-- Mobile Menu Button (Placeholder) -->
-      <button class="md:hidden p-2 text-muted hover:text-text">
-        <span class="sr-only">Menu</span>
+      <!-- Mobile Menu Button -->
+      <button 
+        class="md:hidden p-2 text-muted hover:text-text transition-colors"
+        @click="isMenuOpen = true"
+      >
+        <span class="sr-only">Open Menu</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <Teleport to="body">
+      <Transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="opacity-0 translate-x-full"
+        enter-to-class="opacity-100 translate-x-0"
+        leave-active-class="transition duration-200 ease-in"
+        leave-from-class="opacity-100 translate-x-0"
+        leave-to-class="opacity-0 translate-x-full"
+      >
+        <div 
+          v-if="isMenuOpen" 
+          class="fixed inset-0 z-[60] flex flex-col bg-background/95 backdrop-blur-xl md:hidden"
+        >
+          <!-- Header in Mobile Menu -->
+          <div class="container flex h-16 items-center justify-between border-b border-surface/50">
+            <NuxtLink to="/" class="flex items-center space-x-2" @click="isMenuOpen = false">
+              <span class="font-heading text-xl font-bold text-text">CH</span>
+            </NuxtLink>
+            <button 
+              class="p-2 text-muted hover:text-text transition-colors"
+              @click="isMenuOpen = false"
+            >
+              <span class="sr-only">Close Menu</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+
+          <!-- Links -->
+          <div class="container flex flex-col gap-6 py-8 overflow-y-auto">
+            <NuxtLink 
+              to="/" 
+              class="text-2xl font-semibold text-text hover:text-primary transition-colors"
+              @click="isMenuOpen = false"
+            >
+              Home
+            </NuxtLink>
+            
+            <NuxtLink 
+              to="/work" 
+              class="text-2xl font-semibold text-text hover:text-primary transition-colors"
+              @click="isMenuOpen = false"
+            >
+              Work
+            </NuxtLink>
+
+            <NuxtLink 
+              to="/#about" 
+              class="text-2xl font-semibold text-text hover:text-primary transition-colors"
+              @click="isMenuOpen = false"
+            >
+              About
+            </NuxtLink>
+            <NuxtLink 
+              to="/contact" 
+              class="text-2xl font-semibold text-text hover:text-primary transition-colors"
+              @click="isMenuOpen = false"
+            >
+              Contact
+            </NuxtLink>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </header>
 </template>
 
@@ -61,10 +129,20 @@ const { data: workItems } = await useAsyncData('work-nav', () =>
 )
 
 const isScrolled = ref(false)
+const isMenuOpen = ref(false)
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 20
 }
+
+// Body scroll lock
+watch(isMenuOpen, (val) => {
+  if (val) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
@@ -73,5 +151,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.body.style.overflow = ''
 })
 </script>
