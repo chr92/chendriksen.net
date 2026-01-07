@@ -1,16 +1,24 @@
-<script setup lang="ts">
 const images = [
-  '/images/slideshow_placeholder_1_1767788762262.png',
-  '/images/slideshow_placeholder_2_1767788776942.png',
-  '/images/slideshow_placeholder_3_1767788794773.png'
+  '/images/home_slideshow/big_zeus.jpg',
+  '/images/home_slideshow/big_zeus_2.jpg',
+  '/images/home_slideshow/big_zeus_3.jpg',
+  '/images/home_slideshow/big_zeus_4.jpg',
+  '/images/home_slideshow/big_zeus_5.jpg',
+  '/images/home_slideshow/big_zeus_6.jpg',
+  '/images/home_slideshow/big_zeus_7.jpg',
+  '/images/home_slideshow/class_shot.jpg',
+  '/images/home_slideshow/clown.jpg',
+  '/images/home_slideshow/with_philippe.jpg'
 ]
 
-const currentImageIndex = ref(0) // Start at 0
+const currentImageIndex = ref(0)
 
 onMounted(() => {
-  setInterval(() => {
-    currentImageIndex.value = (currentImageIndex.value + 1) % images.length
-  }, 5000) // Change every 5 seconds
+  if (images.length > 0) {
+    setInterval(() => {
+      currentImageIndex.value = (currentImageIndex.value + 1) % images.length
+    }, 5000)
+  }
 })
 </script>
 

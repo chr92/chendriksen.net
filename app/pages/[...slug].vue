@@ -22,7 +22,7 @@ useSeoMeta({
   <div>
     <!-- Dynamic Layout Switching -->
     <ProjectLayout 
-        v-if="path.startsWith('/current-projects') || path.startsWith('/previous-work')" 
+        v-if="path.startsWith('/work')" 
         :page="page" 
     />
 
