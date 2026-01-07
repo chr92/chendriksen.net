@@ -1,1 +1,0 @@
-import{_ as e,c as n,a as o,o as c}from"./DglBbtOG.js";const s={},a={class:"container py-24"};function r(d,t){return c(),n("div",a,[...t[0]||(t[0]=[o("h1",{class:"mb-8 text-4xl font-heading font-bold text-text"},"Contact",-1),o("p",{class:"text-muted"},"Contact form coming soon...",-1)])])}const l=e(s,[["render",r]]);export{l as default};
