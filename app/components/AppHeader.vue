@@ -8,15 +8,39 @@
       </NuxtLink>
 
       <nav class="hidden md:flex gap-6">
-        <NuxtLink 
+        <div 
           v-for="link in navigation" 
-          :key="link.path" 
-          :to="link.path"
-          class="text-sm font-medium text-muted hover:text-primary transition-colors"
-          active-class="text-primary font-bold"
+          :key="link.path"
+          class="relative group"
         >
-          {{ link.name }}
-        </NuxtLink>
+          <NuxtLink 
+            :to="link.path"
+            class="flex items-center gap-1 py-4 text-sm font-medium text-muted hover:text-primary transition-colors"
+            active-class="text-primary font-bold"
+          >
+            {{ link.name }}
+            <!-- Chevron Icon if children exist -->
+            <svg v-if="link.children && link.children.length" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+          </NuxtLink>
+
+          <!-- Dropdown Menu -->
+          <div 
+            v-if="link.children && link.children.length"
+            class="absolute left-0 top-full hidden w-64 pt-2 group-hover:block"
+          >
+            <div class="rounded-xl border border-surface/50 bg-background/95 p-2 backdrop-blur-xl shadow-xl">
+              <NuxtLink 
+                v-for="child in link.children" 
+                :key="child.path"
+                :to="child.path"
+                class="block rounded-lg px-4 py-3 text-sm text-muted hover:bg-surface hover:text-primary transition-colors"
+                active-class="bg-surface text-primary font-bold"
+              >
+                {{ child.name }}
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <!-- Mobile Menu Button (Placeholder) -->
@@ -29,8 +53,29 @@
 </template>
 
 <script setup lang="ts">
-const navigation = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-]
+const { data: navigation } = await useAsyncData('navigation', async () => {
+  // Fetch all content items
+  const allContent = await queryCollection('content').select('title', 'path').all()
+
+  // Helper to get children for a path
+  const getChildren = (prefix: string) => 
+    allContent
+      .filter(c => c.path.startsWith(prefix + '/') && c.path !== prefix)
+      .map(c => ({ name: c.title, path: c.path }))
+
+  return [
+    { name: 'Home', path: '/' },
+    { 
+      name: 'Current Projects', 
+      path: '/current-projects', 
+      children: getChildren('/current-projects')
+    },
+    { 
+      name: 'Previous Work', 
+      path: '/previous-work',
+      children: getChildren('/previous-work')
+    },
+    { name: 'About', path: '/about' },
+  ]
+})
 </script>
