@@ -12,10 +12,8 @@ useSeoMeta({
     <!-- Hero Section -->
     <section class="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-surface text-center">
       <!-- Background Image with Overlay -->
-      <div class="absolute inset-0 z-0">
-         <img src="/images/hero.jpg" alt="Hero Background" class="h-full w-full object-cover opacity-30" />
-         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
-      </div>
+      <!-- Background Slideshow -->
+      <HomeSlideshow />
 
       <!-- Hero Content -->
       <div class="container relative z-10 px-4 py-24">
@@ -43,9 +41,12 @@ useSeoMeta({
     </section>
 
     <!-- Content Section -->
-    <section class="container py-24">
-      <div class="prose prose-invert prose-lg mx-auto max-w-4xl">
-         <!-- Render the markdown content, excluding the hero image/title which we handled above -->
+    <!-- Recent Work Grid -->
+    <ProjectGrid />
+
+    <!-- Content Section (About Teaser or SEO text) -->
+    <section class="container py-12">
+      <div class="prose prose-invert prose-lg mx-auto max-w-4xl text-center text-muted">
         <ContentRenderer :value="page">
            <template #empty>
               <p>No content found.</p>

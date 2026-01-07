@@ -3,21 +3,31 @@ const route = useRoute()
 
 const { data: page } = await useAsyncData('page-' + route.path, () => {
   return queryCollection('content').path(route.path).first()
-})
+}) as { data: Ref<any> }
 
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
+const path = route.path
+import ProjectLayout from '~/components/layouts/ProjectLayout.vue'
+
 useSeoMeta({
-  title: page.value.title,
-  description: page.value.description
+  title: page.value?.title,
+  description: page.value?.description
 })
 </script>
 
 <template>
-  <div class="container py-24">
-    <article v-if="page" class="mx-auto max-w-4xl">
+  <div>
+    <!-- Dynamic Layout Switching -->
+    <ProjectLayout 
+        v-if="path.startsWith('/current-projects') || path.startsWith('/previous-work')" 
+        :page="page" 
+    />
+
+    <!-- Fallback Generic Layout -->
+    <article v-else class="container max-w-4xl py-24">
       <header class="mb-12 text-center">
         <h1 class="font-heading text-4xl font-bold text-text sm:text-5xl md:text-6xl">
           {{ page.title }}
