@@ -1,24 +1,33 @@
-# Welcome to Nuxt Content Starter
+---
+title: "Home"
+description: "Christiaan Hendriksen — comedian and director based in East Kent."
+---
 
-This is the main page displaying Markdown located at [content/index.md](https://github.com/nuxt/starter/blob/content/content/index.md).
+![Christiaan Hendriksen performing](/images/hero.jpg)
 
-Move to [about](/about) page.
+# Hi, I'm Christiaan, a comedian and director based in East Kent
 
-## Manage your Contents
+I make physical comedy, family shows, and ensemble clown work.
 
-Create new pages or modify the existing ones in `content/` directory.
+## About
 
-## Query & Render Pages
+Christiaan Hendriksen is an award-winning comedian and director based in Broadstairs, Kent. A graduate of the prestigious Ecole Philippe Gaulier in Paris, France and The Free Association in London, Christiaan has honed his craft under the tutelage of some of the most celebrated figures in contemporary clowning and comedy, including Spymonkey, Carlo Jacucci, Mick Barnfather, Deanna Fleysher and Viggo Venn.
 
-You can find an example of querying contents and rendering them in a [catch-all page](https://github.com/nuxt/starter/blob/content/app/pages/%5B...slug%5D.vue)
+Christiaan is the creator of the podcast “An Interview with Philippe Gaulier,” and is currently directing a documentary titled “Waiting For Freedom,” which delves into the life and work of Philippe Gaulier. He has directed other projects, more details of which can be found on this site.
 
-## Integrate Vue Component
+Christiaan regularly performs both solo and with the group Big Zeus Energy. His unique comedic style has earned him critical acclaim, including a nomination for Best Debut Show at the Leicester Comedy Festival with Big Zeus Energy. Critics have praised his work as “bizarre and beautiful” and “delightfully charming.” He leads workshops in clowning and creating comedic performances.
 
-::alert{color="green"}
-The current [alert](https://github.com/nuxt/starter/blob/content/app/components/Alert.vue) and the [counter](https://github.com/nuxt/starter/blob/content/app/components/Counter.vue) below are `Vue` components integrated into the Markdown.
-::
+## Recent work
 
-::counter
-::
+- [Werewolves of London](/current-projects/werewolves-of-london)
+- [Treeeeee](/current-projects/treeee)
+- [Waiting for Freedom](/current-projects/waiting-for-freedom)
+- [The Jazz Man](/previous-work/the-jazz-man)
+- [Big Zeus Energy](/previous-work/big-zeus-energy)
+- [An Interview with Philippe Gaulier](/previous-work/an-interview-with-philippe-gaulier)
 
-Checkout out the [documentation](https://content.nuxt.com/docs/getting-started) to learn more.
+## Get in touch
+
+- Email: [hey@chendriksen.net](mailto:hey@chendriksen.net)
+- Instagram: **TODO** (add link)
+- YouTube: **TODO** (add link)
