@@ -1,13 +1,18 @@
 <template>
-  <header class="sticky top-0 z-50 w-full border-b border-surface/50 bg-background/80 backdrop-blur-md">
+  <header 
+    class="fixed top-0 z-50 w-full transition-all duration-300"
+    :class="[
+      isScrolled 
+        ? 'border-b border-surface/50 bg-background/80 backdrop-blur-md' 
+        : 'border-b border-transparent bg-transparent backdrop-blur-none'
+    ]"
+  >
     <div class="container flex h-16 items-center justify-between">
       <NuxtLink to="/" class="flex items-center space-x-2">
-        <span class="font-heading text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        <span class="font-heading text-xl font-bold text-text">
           CH
         </span>
       </NuxtLink>
-
-
 
       <nav class="hidden md:flex items-center gap-8">
         <NuxtLink to="/" class="text-sm font-medium text-muted hover:text-primary transition-colors">Home</NuxtLink>
@@ -54,4 +59,19 @@ const { data: workItems } = await useAsyncData('work-nav', () =>
     .select('title', 'path')
     .all()
 )
+
+const isScrolled = ref(false)
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 20
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // Initialize on mount
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>

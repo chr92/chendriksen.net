@@ -12,7 +12,7 @@ useSeoMeta({
 <template>
   <div v-if="page" class="bg-background">
     <!-- Hero Section -->
-    <section class="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-surface text-center">
+    <section class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface text-center">
       <!-- Background Slideshow -->
       <HomeSlideshow />
 
@@ -51,7 +51,7 @@ useSeoMeta({
         <div class="relative mx-auto w-full max-w-md lg:mx-0">
           <div class="aspect-[3/4] overflow-hidden rounded-2xl bg-surface">
              <img 
-               src="/images/portrait.png" 
+               src="/images/christiaan.jpg" 
                alt="Christiaan Hendriksen" 
                class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
              />

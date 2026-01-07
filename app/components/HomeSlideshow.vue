@@ -1,16 +1,6 @@
 <script setup lang="ts">
-const images = [
-  '/images/home_slideshow/big_zeus.jpg',
-  '/images/home_slideshow/big_zeus_2.jpg',
-  '/images/home_slideshow/big_zeus_3.jpg',
-  '/images/home_slideshow/big_zeus_4.jpg',
-  '/images/home_slideshow/big_zeus_5.jpg',
-  '/images/home_slideshow/big_zeus_6.jpg',
-  '/images/home_slideshow/big_zeus_7.jpg',
-  '/images/home_slideshow/class_shot.jpg',
-  '/images/home_slideshow/clown.jpg',
-  '/images/home_slideshow/with_philippe.jpg'
-]
+const imageModules = import.meta.glob('../assets/images/home_slideshow/*', { eager: true, import: 'default' })
+const images = Object.values(imageModules) as string[]
 
 const currentImageIndex = ref(0)
 
