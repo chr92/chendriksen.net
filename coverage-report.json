@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-01-08T08:18:15.518Z",
+  "baseUrl": "http://localhost:60979",
+  "pages": [
+    "/",
+    "/work",
+    "/contact",
+    "/work/an-interview-with-philippe-gaulier",
+    "/work/big-zeus-energy",
+    "/work/the-jazz-man",
+    "/work/treeee",
+    "/work/waiting-for-freedom",
+    "/work/werewolves-of-london"
+  ],
+  "css": {
+    "totalBytes": 483983,
+    "usedBytes": 121783,
+    "unusedBytes": 362200,
+    "unusedPercent": 74.84
+  },
+  "images": {
+    "totalPublicImages": 8,
+    "unusedImages": [
+      "portrait.png"
+    ]
+  },
+  "requestedImages": [
+    "http://localhost:60979/_nuxt/vaudeville.Cb_3x276.jpg",
+    "http://localhost:60979/_nuxt/withollie.DLcOJBTa.jpg",
+    "http://localhost:60979/_nuxt/withphilippe.D1UdShRD.jpg",
+    "http://localhost:60979/_nuxt/zeus-energy.BQYU_Hc-.jpg",
+    "http://localhost:60979/images/philippe.jpg",
+    "http://localhost:60979/images/bigzeusposter.png",
+    "http://localhost:60979/images/jazzman.jpg",
+    "http://localhost:60979/images/treeeeee-logo.jpg",
+    "http://localhost:60979/images/waitingforfreedom.jpg",
+    "http://localhost:60979/images/werewolvesoflondon.jpg",
+    "http://localhost:60979/images/christiaan.jpg"
+  ]
+}
