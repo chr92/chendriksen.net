@@ -2,6 +2,7 @@
 const { data: projects } = await useAsyncData('projects-grid-v2', () => 
   queryCollection('content')
     .where('path', 'LIKE', '/work/%')
+    .orderBy('year', 'DESC')
     .limit(6)
     .all()
 )

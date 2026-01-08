@@ -3,6 +3,7 @@ title: "Big Zeus Energy"
 description: "High energy comedy."
 image: "/images/bigzeusposter.png"
 headerImage: "/images/bigzeusposter.png"
+year: 2022
 ---
 
 # Big Zeus Energy
