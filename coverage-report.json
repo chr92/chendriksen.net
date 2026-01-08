@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-08T08:36:42.397Z",
+  "generatedAt": "2026-01-08T08:38:05.224Z",
   "baseUrl": "http://localhost:61900",
   "pages": [
     "/",
@@ -19,10 +19,9 @@
     "unusedPercent": 74.69
   },
   "images": {
-    "totalPublicImages": 8,
+    "totalPublicImages": 7,
     "unusedImages": [
-      "christiaan.jpg",
-      "optimized"
+      "christiaan.jpg"
     ]
   },
   "requestedImages": [
