@@ -102,6 +102,29 @@ npm run lighthouse
 npm run perf:e2e
 ```
 
-> CI automation for performance checks has been removed from this repo. The site is still deployed via Vercel; performance tooling is available to run locally and should be executed before opening PRs if you want up-to-date reports.
+### Adding new images (pages & homepage slideshow)
+
+- Page images (content pages)
+  - Add your source image to `public/images/` (e.g., `public/images/new-project.jpg`).
+  - Reference it in the page frontmatter: `image: /images/new-project.jpg` (or `meta.image`). For galleries, use `gallery: ['/images/a.jpg', '/images/b.jpg']`.
+  - Run `npm run gen:images` — this will generate AVIF/WebP variants and a mapping file (`app/assets/optimized-images.json` and `public/images/optimized/images.json`). Mapping keys are the image filename (basename), e.g. `new-project.jpg`.
+  - Components (`ProjectLayout`, `ProjectCard`) automatically use optimized AVIF/WebP `srcset`s when a mapping exists; otherwise they fall back to the original URL.
+
+- Homepage slideshow images
+  - Add slide files to `app/assets/images/home_slideshow/` (e.g., `app/assets/images/home_slideshow/slide-1.jpg`). `HomeSlideshow.vue` imports images from this directory automatically via `import.meta.glob`.
+  - Run `npm run gen:images` — slideshow images will be processed and added under `public/images/optimized/home_slideshow/` with mapping entries.
+  - The slideshow will use optimized assets automatically when present.
+
+- File types & limitations
+  - The generator currently processes JPEG/JPG and PNG files. If you add other formats (SVG/WebP) they will not be processed unless the script is extended.
+
+- Commit generated assets (recommended)
+  - Since builds (Vercel) may not run `gen:images` for you, commit the generated `public/images/optimized/*` and `app/assets/optimized-images.json` so Preview and Production use the optimized images.
+  - Alternatively, add `npm run gen:images` to your build step if you want generation to happen automatically during deployment.
+
+- Quick verification
+  - Use `npm run perf:e2e` to generate images, build, preview, and run coverage & Lighthouse locally.
+
+> The performance tooling is intentionally local-only; run the generator locally and commit the outputs before deploying to ensure optimized images are available in production.
 
 --
