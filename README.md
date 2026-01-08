@@ -59,7 +59,7 @@ bun run preview
 
 ## Performance testing ✅
 
-We include scripts and automation to measure CSS/image usage and Lighthouse scores locally and in CI.
+We include scripts to measure CSS/image usage and Lighthouse scores **locally** during development.
 
 - Generate optimized images (AVIF/WebP + responsive srcsets):
 
@@ -74,7 +74,7 @@ Generated files:
 
 Notes: the image generator uses `sharp` and outputs sizes at 400, 800, 1200, 1600 px (quality 80). Import the mapping from `app/assets/optimized-images.json` in components to use AVIF/WebP `srcset`s and fallbacks.
 
-- Run the Puppeteer CSS & image coverage report:
+- Run the Puppeteer CSS & image coverage report (manual steps):
 
 ```bash
 # build and preview (in a separate terminal)
@@ -95,12 +95,13 @@ npm run lighthouse
 # writes lighthouse-report.json
 ```
 
-- CI automation:
+- One-command e2e perf run (local):
 
-A GitHub Actions workflow (`.github/workflows/perf.yml`) runs on pushes and pull requests to `main`. It:
-- runs `npm run gen:images` and fails if generated images/mapping differ from what's committed (so PRs must include updated generated assets),
-- builds the site, runs the preview server, executes the coverage script, runs Lighthouse, and uploads `coverage-report.json` and `lighthouse-report.json` as workflow artifacts.
+```bash
+# runs gen:images -> build -> preview -> coverage -> lighthouse
+npm run perf:e2e
+```
 
----
+> CI automation for performance checks has been removed from this repo. The site is still deployed via Vercel; performance tooling is available to run locally and should be executed before opening PRs if you want up-to-date reports.
 
-If you'd like, I can also add a convenience script to run the build + preview + coverage + lighthouse end-to-end locally.
+--
