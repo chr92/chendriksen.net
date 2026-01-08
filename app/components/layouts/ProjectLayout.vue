@@ -17,7 +17,6 @@ const heroMapping = computed(() => resolveOptimizedImage(heroUrl.value))
 // Content image (thumbnail used on homepage/cards): use `image` field so the same image appears on homepage and here
 const contentImageUrl = computed(() => page.value?.image || page.value?.meta?.image)
 const contentImageMapping = computed(() => resolveOptimizedImage(contentImageUrl.value))
-const galleryItems = computed(() => (page.value?.gallery || []).map((g: string) => ({ original: g, mapping: resolveOptimizedImage(g) })))
 
 // Trim the first-level heading from the rendered body so the title doesn't repeat
 const trimmedBody = computed(() => {
@@ -63,27 +62,7 @@ const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.va
       </div>
     </div>
 
-    <!-- Metadata Bar -->
-    <div class="border-b border-white/10 bg-surface/30 backdrop-blur">
-        <div class="container grid max-w-5xl grid-cols-2 gap-8 py-8 sm:grid-cols-4">
-            <div v-if="page.role">
-                <span class="block text-xs font-bold uppercase tracking-wider text-muted">Role</span>
-                <span class="text-lg font-medium text-white">{{ page.role }}</span>
-            </div>
-            <div v-if="page.director">
-                <span class="block text-xs font-bold uppercase tracking-wider text-muted">Director</span>
-                <span class="text-lg font-medium text-white">{{ page.director }}</span>
-            </div>
-            <div v-if="page.year">
-                <span class="block text-xs font-bold uppercase tracking-wider text-muted">Year</span>
-                <span class="text-lg font-medium text-white">{{ page.year }}</span>
-            </div>
-             <div v-if="page.company">
-                <span class="block text-xs font-bold uppercase tracking-wider text-muted">Company</span>
-                <span class="text-lg font-medium text-white">{{ page.company }}</span>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Main Content & Gallery -->
     <div class="container relative z-10 pt-16">
@@ -107,23 +86,7 @@ const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.va
                   <img v-else :src="contentImageUrl" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
                 </div>
 
-                <!-- Gallery Section -->
-                <div v-if="page.gallery" class="grid gap-4 sm:grid-cols-2">
-                     <div 
-                        v-for="(item, idx) in galleryItems" 
-                        :key="idx"
-                        class="group relative overflow-hidden rounded-lg bg-surface"
-                        :class="{ 'sm:col-span-2': idx % 3 === 0 }"
-                    >
-                      <picture v-if="item.mapping">
-                        <source type="image/avif" :srcset="item.mapping.avif" sizes="(max-width: 768px) 100vw, 50vw" />
-                        <source type="image/webp" :srcset="item.mapping.webp" sizes="(max-width: 768px) 100vw, 50vw" />
-                        <img :src="item.mapping.fallback" alt="Gallery Image" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" />
-                      </picture>
-                      <img v-else :src="item.original" alt="Gallery Image" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" />
-                     </div>
-                </div>
-                <div v-else-if="!contentImageUrl" class="flex h-64 items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20">
+                <div v-else class="flex items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20">
                     <p class="text-muted">Image placeholder</p>
                 </div>
             </div>

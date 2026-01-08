@@ -16,7 +16,11 @@ This repo stores site content as Markdown files under the `content/` folder. Fol
     - `description`: short description used in SEO and listings
     - `image`: path to the thumbnail used on the homepage / project card (e.g. `/images/new-project.jpg`)
     - `headerImage` (optional but recommended): path to the hero/header image used at the top of the project page. If omitted, `image` is used as fallback.
-  - Optional frontmatter fields that the layout will read (add as needed): `tags`, `role`, `director`, `year`, `company`, `gallery` (array of image paths), `navigation`.
+  - Optional frontmatter fields that the layout will read (add as needed):
+    - `tags`: displayed as small pill tags beneath the hero/title.
+    - `role`, `director`, `year`, `company`: shown in the metadata bar below the hero.
+    - `gallery`: array of image paths; rendered in the gallery section on the project page.
+    - `navigation`: a flag you can add for editorial control, but it is NOT used by the homepage selection query by default (see below). To make the homepage only list pages with `navigation: true`, update `app/components/ProjectGrid.vue` and add a `.where('navigation', '==', true)` to the content query.
 
 Example frontmatter for a `work` page:
 
