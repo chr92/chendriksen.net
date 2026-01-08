@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, unref } from 'vue'
 import { resolveOptimizedImage } from '~/composables/useOptimizedImage'
 
-const page = defineProps<{
+const props = defineProps<{
   page: any
 }>()
 
-const heroUrl = computed(() => page.image || page.meta?.image)
+// Make `page` robust to being passed as either a Ref or a plain object
+// Default to an empty object to avoid SSR property access errors when undefined
+const page = computed(() => unref(props.page) || {})
+
+const heroUrl = computed(() => page.value?.image || page.value?.meta?.image)
 const heroMapping = computed(() => resolveOptimizedImage(heroUrl.value))
-const galleryItems = computed(() => (page.gallery || []).map((g: string) => ({ original: g, mapping: resolveOptimizedImage(g) })))
+const galleryItems = computed(() => (page.value?.gallery || []).map((g: string) => ({ original: g, mapping: resolveOptimizedImage(g) })))
 </script>
 
 <template>

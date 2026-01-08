@@ -11,6 +11,10 @@ if (!page.value) {
 
 const path = route.path
 import ProjectLayout from '~/components/layouts/ProjectLayout.vue'
+import { computed } from 'vue'
+
+// Serialize the `page` data into a plain object so it is safe for SSR
+const pagePlain = computed(() => (page?.value ? JSON.parse(JSON.stringify(page.value)) : {}))
 
 useSeoMeta({
   title: page.value?.title,
@@ -23,7 +27,7 @@ useSeoMeta({
     <!-- Dynamic Layout Switching -->
     <ProjectLayout 
         v-if="path.startsWith('/work')" 
-        :page="page" 
+        :page="pagePlain" 
     />
 
     <!-- Fallback Generic Layout -->
