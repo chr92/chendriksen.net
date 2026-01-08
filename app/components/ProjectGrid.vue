@@ -1,11 +1,20 @@
 <script setup lang="ts">
-const { data: projects } = await useAsyncData('projects-grid-v2', () => 
+const { data: projectsData } = await useAsyncData('projects-grid-sorted', () => 
   queryCollection('content')
     .where('path', 'LIKE', '/work/%')
-    .orderBy('year', 'DESC')
-    .limit(6)
     .all()
 )
+
+const projects = computed(() => {
+  if (!projectsData.value) return []
+  return [...projectsData.value]
+    .sort((a, b) => {
+      const yearA = parseInt(String(a.meta?.year || a.year || 0), 10)
+      const yearB = parseInt(String(b.meta?.year || b.year || 0), 10)
+      return yearB - yearA
+    })
+    .slice(0, 6)
+})
 </script>
 
 <template>

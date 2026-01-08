@@ -3,7 +3,7 @@ title: "Waiting For Freedom"
 description: "A documentary about Philippe Gaulier."
 image: "/images/waitingforfreedom.jpg"
 headerImage: "/images/waitingforfreedom.jpg"
-year: 2025
+year: 2026
 ---
 
 # Waiting for Freedom
