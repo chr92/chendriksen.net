@@ -18,9 +18,6 @@ This repo stores site content as Markdown files under the `content/` folder. Fol
     - `headerImage` (optional but recommended): path to the hero/header image used at the top of the project page. If omitted, `image` is used as fallback.
   - Optional frontmatter fields that the layout will read (add as needed):
     - `tags`: displayed as small pill tags beneath the hero/title.
-    - `role`, `director`, `year`, `company`: shown in the metadata bar below the hero.
-    - `gallery`: array of image paths; rendered in the gallery section on the project page.
-    - `navigation`: a flag you can add for editorial control, but it is NOT used by the homepage selection query by default (see below). To make the homepage only list pages with `navigation: true`, update `app/components/ProjectGrid.vue` and add a `.where('navigation', '==', true)` to the content query.
 
 Example frontmatter for a `work` page:
 
@@ -31,8 +28,6 @@ description: "Short blurb about the project."
 image: "/images/new-project.jpg"        # thumbnail used on homepage and next-to-text image
 headerImage: "/images/new-project-hero.jpg"  # hero image for the top of the project page
 tags: ["theatre", "clown"]
-role: "Performer"
-gallery: ["/images/gallery-1.jpg", "/images/gallery-2.jpg"]
 ---
 ```
 

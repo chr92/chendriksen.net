@@ -74,9 +74,9 @@ const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.va
                  </div>
             </div>
 
-            <!-- Right: Content Image + Gallery -->
-            <div class="lg:col-span-7 space-y-12">
-                <!-- Primary Content Image (render at natural height, don't crop vertically) -->
+            <!-- Right: Content Image -->
+            <div class="lg:col-span-7">
+                <!-- Content Image (render at natural height, don't crop vertically) -->
                 <div v-if="contentImageUrl" class="relative w-full overflow-hidden rounded-lg bg-surface">
                   <picture v-if="contentImageMapping">
                     <source type="image/avif" :srcset="contentImageMapping.avif" sizes="(max-width: 768px) 100vw, 50vw" />
