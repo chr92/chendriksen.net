@@ -10,4 +10,14 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading font-bold;
   }
+
+  /* Remove underline for heading anchor links inserted by the content renderer */
+  .prose h2 > a,
+  .prose h3 > a,
+  .prose h4 > a,
+  .prose h5 > a,
+  .prose h6 > a,
+  .prose a[href^="#"] {
+    @apply no-underline;
+  }
 }

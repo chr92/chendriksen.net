@@ -10,9 +10,29 @@ const props = defineProps<{
 // Default to an empty object to avoid SSR property access errors when undefined
 const page = computed(() => unref(props.page) || {})
 
-const heroUrl = computed(() => page.value?.image || page.value?.meta?.image)
+// Hero image: allow a per-page `headerImage` (frontmatter) and fall back to `image`
+const heroUrl = computed(() => page.value?.headerImage || page.value?.meta?.headerImage || page.value?.image || page.value?.meta?.image)
 const heroMapping = computed(() => resolveOptimizedImage(heroUrl.value))
+
+// Content image (thumbnail used on homepage/cards): use `image` field so the same image appears on homepage and here
+const contentImageUrl = computed(() => page.value?.image || page.value?.meta?.image)
+const contentImageMapping = computed(() => resolveOptimizedImage(contentImageUrl.value))
 const galleryItems = computed(() => (page.value?.gallery || []).map((g: string) => ({ original: g, mapping: resolveOptimizedImage(g) })))
+
+// Trim the first-level heading from the rendered body so the title doesn't repeat
+const trimmedBody = computed(() => {
+  const body = page.value?.body
+  if (!body || !Array.isArray(body.value)) return body
+  const nodes = body.value
+  const first = nodes[0]
+  if (Array.isArray(first) && first[0] === 'h1') {
+    return { ...body, value: nodes.slice(1) }
+  }
+  return body
+})
+
+// Provide a content object for the renderer with the trimmed body
+const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.value }))
 </script>
 
 <template>
@@ -70,13 +90,24 @@ const galleryItems = computed(() => (page.value?.gallery || []).map((g: string) 
         <div class="grid gap-16 lg:grid-cols-12">
             <!-- Left: Text Content -->
             <div class="lg:col-span-5">
-                <div class="prose prose-invert prose-lg sticky top-32">
-                     <ContentRenderer :value="page" />
-                </div>
+                 <div class="prose prose-invert prose-lg">
+                   <ContentRenderer :value="contentForRenderer" />
+                 </div>
             </div>
 
-            <!-- Right: Gallery -->
-            <div class="lg:col-span-7">
+            <!-- Right: Content Image + Gallery -->
+            <div class="lg:col-span-7 space-y-12">
+                <!-- Primary Content Image (render at natural height, don't crop vertically) -->
+                <div v-if="contentImageUrl" class="relative w-full overflow-hidden rounded-lg bg-surface">
+                  <picture v-if="contentImageMapping">
+                    <source type="image/avif" :srcset="contentImageMapping.avif" sizes="(max-width: 768px) 100vw, 50vw" />
+                    <source type="image/webp" :srcset="contentImageMapping.webp" sizes="(max-width: 768px) 100vw, 50vw" />
+                    <img :src="contentImageMapping.fallback" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+                  </picture>
+                  <img v-else :src="contentImageUrl" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+                </div>
+
+                <!-- Gallery Section -->
                 <div v-if="page.gallery" class="grid gap-4 sm:grid-cols-2">
                      <div 
                         v-for="(item, idx) in galleryItems" 
@@ -92,8 +123,8 @@ const galleryItems = computed(() => (page.value?.gallery || []).map((g: string) 
                       <img v-else :src="item.original" alt="Gallery Image" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" />
                      </div>
                 </div>
-                <div v-else class="flex h-64 items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20">
-                    <p class="text-muted">Gallery placeholder</p>
+                <div v-else-if="!contentImageUrl" class="flex h-64 items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20">
+                    <p class="text-muted">Image placeholder</p>
                 </div>
             </div>
         </div>

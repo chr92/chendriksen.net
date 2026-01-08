@@ -2,6 +2,7 @@
 title: "Treeeee"
 description: "An experimental clown piece about nature."
 image: "/images/treeeeee-logo.jpg"
+headerImage: "/images/treeeeee-logo.jpg"
 ---
 
 # Treeeee
