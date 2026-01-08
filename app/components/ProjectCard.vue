@@ -20,6 +20,8 @@ const imageUrl = props.image || props.meta?.image
             :src="imageUrl" 
             :alt="title" 
             class="h-full w-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110"
+            loading="lazy"
+            decoding="async"
         />
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/40"></div>

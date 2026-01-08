@@ -27,8 +27,11 @@ onMounted(() => {
           :src="image" 
           alt="Atmospheric Background" 
           class="h-full w-full object-cover opacity-40 transition-transform duration-[10000ms] ease-linear transform scale-100 animate-ken-burns" 
+          :loading="currentImageIndex === index ? 'eager' : 'lazy'"
+          :fetchpriority="currentImageIndex === index ? 'high' : 'auto'"
+          decoding="async"
         />
-      </div>
+      </div> 
     </transition-group>
 
     <!-- Overlay Gradient -->

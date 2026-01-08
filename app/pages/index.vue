@@ -1,20 +1,32 @@
 <script setup lang="ts">
 // Fetch content from 'homepage.md' to populate both the Hero and About sections.
 // This file serves as the single source of truth for the homepage text.
+import { defineAsyncComponent } from 'vue'
+import heroImage from '~/assets/images/home_slideshow/vaudeville.jpg'
+
 const { data: page } = await useAsyncData('home-content', () => queryCollection('content').path('/homepage').first())
+
+// Preload the primary hero image for better LCP
+useHead({
+  link: [{ rel: 'preload', as: 'image', href: heroImage }]
+})
 
 useSeoMeta({
   title: page.value?.title,
   description: page.value?.description,
 })
+
+const HomeSlideshow = defineAsyncComponent(() => import('~/components/HomeSlideshow.vue'))
 </script>
 
 <template>
   <div v-if="page" class="bg-background">
     <!-- Hero Section -->
     <section class="relative flex min-h-screen items-center justify-center overflow-hidden bg-surface text-center">
-      <!-- Background Slideshow -->
-      <HomeSlideshow />
+      <!-- Background Slideshow (client-only, lazy-loaded) -->
+      <ClientOnly>
+        <HomeSlideshow />
+      </ClientOnly> 
 
       <!-- Hero Content -->
       <div class="container relative z-10 px-4 py-24">
@@ -74,6 +86,8 @@ useSeoMeta({
                  src="/images/christiaan.jpg" 
                  alt="Christiaan Hendriksen" 
                  class="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                 loading="lazy"
+                 decoding="async"
                />
             </div>
           </div>
