@@ -1,7 +1,14 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+import { resolveOptimizedImage } from '~/composables/useOptimizedImage'
+
+const page = defineProps<{
   page: any
 }>()
+
+const heroUrl = computed(() => page.image || page.meta?.image)
+const heroMapping = computed(() => resolveOptimizedImage(heroUrl.value))
+const galleryItems = computed(() => (page.gallery || []).map((g: string) => ({ original: g, mapping: resolveOptimizedImage(g) })))
 </script>
 
 <template>
@@ -9,11 +16,13 @@ defineProps<{
     <!-- Project Hero -->
     <div class="relative h-[60vh] w-full overflow-hidden">
       <div class="absolute inset-0">
-         <img 
-            :src="page.image || page.meta?.image" 
-            :alt="page.title" 
-            class="h-full w-full object-cover"
-         />
+         <picture v-if="heroMapping">
+           <source type="image/avif" :srcset="heroMapping.avif" sizes="100vw" />
+           <source type="image/webp" :srcset="heroMapping.webp" sizes="100vw" />
+           <img :src="heroMapping.fallback" :alt="page.title" class="h-full w-full object-cover" loading="eager" decoding="async" fetchpriority="high" />
+         </picture>
+         <img v-else :src="page.image || page.meta?.image" :alt="page.title" class="h-full w-full object-cover" />
+
          <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
       </div>
       
@@ -66,16 +75,17 @@ defineProps<{
             <div class="lg:col-span-7">
                 <div v-if="page.gallery" class="grid gap-4 sm:grid-cols-2">
                      <div 
-                        v-for="(img, idx) in page.gallery" 
+                        v-for="(item, idx) in galleryItems" 
                         :key="idx"
                         class="group relative overflow-hidden rounded-lg bg-surface"
                         :class="{ 'sm:col-span-2': idx % 3 === 0 }"
                     >
-                        <img 
-                            :src="img" 
-                            alt="Gallery Image" 
-                            class="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
+                      <picture v-if="item.mapping">
+                        <source type="image/avif" :srcset="item.mapping.avif" sizes="(max-width: 768px) 100vw, 50vw" />
+                        <source type="image/webp" :srcset="item.mapping.webp" sizes="(max-width: 768px) 100vw, 50vw" />
+                        <img :src="item.mapping.fallback" alt="Gallery Image" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" />
+                      </picture>
+                      <img v-else :src="item.original" alt="Gallery Image" class="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" />
                      </div>
                 </div>
                 <div v-else class="flex h-64 items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20">
