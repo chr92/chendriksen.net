@@ -1,24 +1,7 @@
-# Nuxt Content Starter
+# Christiaan Hendriksen personal website
 
-Look at the [Nuxt Content documentation](https://content.nuxt.com) to learn more.
+This is the personal website of Christiaan Hendriksen. It's built automatically with vercel and served at https://www.chendriksen.net
 
-## Setup
-
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
 
 ## Development Server
 
@@ -71,5 +54,3 @@ yarn preview
 # bun
 bun run preview
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

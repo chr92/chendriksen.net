@@ -13,7 +13,7 @@ export default <Config>{
                 primary: '#6366f1',   // Indigo 500
                 secondary: '#ec4899', // Pink 500
                 text: '#f8fafc',      // Slate 50
-                muted: '#94a3b8',     // Slate 400
+                muted: '#cbd5e1',     // Slate 300 (improved contrast)
             },
             fontFamily: {
                 sans: ['Inter', 'sans-serif'],
