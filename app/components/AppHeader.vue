@@ -30,7 +30,7 @@
             <div class="absolute left-1/2 -translate-x-1/2 top-full hidden min-w-[200px] pt-2 group-hover:block">
                 <div class="rounded-xl border border-surface/50 bg-background/95 p-2 backdrop-blur-xl shadow-xl">
                     <NuxtLink 
-                        v-for="item in workItems" 
+                        v-for="item in sortedWorkItems" 
                         :key="item.path" 
                         :to="item.path"
                         class="block rounded-lg px-4 py-3 text-sm text-muted hover:bg-surface hover:text-primary transition-colors"
@@ -100,6 +100,19 @@
             >
               Work
             </NuxtLink>
+            
+            <!-- Work Sub-items -->
+            <div class="pl-4 flex flex-col gap-3 border-l border-surface/50">
+              <NuxtLink 
+                v-for="item in sortedWorkItems" 
+                :key="item.path"
+                :to="item.path"
+                class="text-lg text-muted hover:text-primary transition-colors"
+                @click="isMenuOpen = false"
+              >
+                {{ item.title }}
+              </NuxtLink>
+            </div>
 
             <NuxtLink 
               to="/#about" 
@@ -123,12 +136,21 @@
 </template>
 
 <script setup lang="ts">
-const { data: workItems } = await useAsyncData('work-nav', () =>
+const { data: workItemsData } = await useAsyncData('work-nav', () =>
   queryCollection('content')
     .where('path', 'LIKE', '/work/%')
-    .select('title', 'path')
     .all()
 )
+
+const sortedWorkItems = computed(() => {
+  if (!workItemsData.value) return []
+  return [...workItemsData.value]
+    .sort((a, b) => {
+      const yearA = parseInt(String(a.meta?.year || a.year || 0), 10)
+      const yearB = parseInt(String(b.meta?.year || b.year || 0), 10)
+      return yearB - yearA
+    })
+})
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
