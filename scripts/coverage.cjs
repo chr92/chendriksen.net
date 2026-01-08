@@ -60,7 +60,9 @@ async function main() {
 
   // Check image usage against public/images
   const publicImagesDir = path.resolve(__dirname, '../public/images')
-  const publicImages = fs.existsSync(publicImagesDir) ? fs.readdirSync(publicImagesDir).filter(f => !f.startsWith('.')) : []
+  const publicImages = fs.existsSync(publicImagesDir)
+    ? fs.readdirSync(publicImagesDir).filter(f => /\.(png|jpe?g|webp|svg|avif)$/i.test(f) && !f.startsWith('.'))
+    : []
 
   const unusedImages = []
   for (const img of publicImages) {
