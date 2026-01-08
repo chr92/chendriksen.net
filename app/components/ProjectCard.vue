@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import optimized from '~/assets/optimized-images.json'
+
 const props = defineProps<{
   title: string
   description: string
@@ -10,19 +13,25 @@ const props = defineProps<{
 
 // Nuxt Content stores custom frontmatter fields in meta object
 const imageUrl = props.image || props.meta?.image
+
+const imageKey = computed(() => {
+  if (!imageUrl) return null
+  return imageUrl.split('/').pop()
+})
+
+const imageMapping = computed(() => (imageKey.value ? optimized[imageKey.value] : null))
 </script>
 
 <template>
   <NuxtLink :to="path" class="group relative block overflow-hidden rounded-lg bg-surface">
     <!-- Image -->
     <div class="aspect-[3/4] w-full overflow-hidden">
-        <img 
-            :src="imageUrl" 
-            :alt="title" 
-            class="h-full w-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110"
-            loading="lazy"
-            decoding="async"
-        />
+        <picture v-if="imageMapping">
+          <source type="image/avif" :srcset="imageMapping.avif" sizes="(max-width: 768px) 100vw, 33vw" />
+          <source type="image/webp" :srcset="imageMapping.webp" sizes="(max-width: 768px) 100vw, 33vw" />
+          <img :src="imageMapping.fallback" :alt="title" class="h-full w-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110" loading="lazy" decoding="async"/>
+        </picture>
+        <img v-else :src="imageUrl" :alt="title" class="h-full w-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110" loading="lazy" decoding="async"/>
         <!-- Overlay -->
         <div class="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/40"></div>
     </div>

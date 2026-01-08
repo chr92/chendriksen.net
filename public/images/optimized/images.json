@@ -1,0 +1,57 @@
+{
+  "bigzeusposter.png": {
+    "avif": "/images/optimized/bigzeusposter-400.avif 400w, /images/optimized/bigzeusposter-800.avif 800w, /images/optimized/bigzeusposter-1200.avif 1200w, /images/optimized/bigzeusposter-1600.avif 1600w",
+    "webp": "/images/optimized/bigzeusposter-400.webp 400w, /images/optimized/bigzeusposter-800.webp 800w, /images/optimized/bigzeusposter-1200.webp 1200w, /images/optimized/bigzeusposter-1600.webp 1600w",
+    "fallback": "/images/optimized/bigzeusposter.png"
+  },
+  "christiaan.jpg": {
+    "avif": "/images/optimized/christiaan-400.avif 400w, /images/optimized/christiaan-800.avif 800w, /images/optimized/christiaan-1200.avif 1200w, /images/optimized/christiaan-1600.avif 1600w",
+    "webp": "/images/optimized/christiaan-400.webp 400w, /images/optimized/christiaan-800.webp 800w, /images/optimized/christiaan-1200.webp 1200w, /images/optimized/christiaan-1600.webp 1600w",
+    "fallback": "/images/optimized/christiaan.jpg"
+  },
+  "jazzman.jpg": {
+    "avif": "/images/optimized/jazzman-400.avif 400w, /images/optimized/jazzman-800.avif 800w, /images/optimized/jazzman-1200.avif 1200w, /images/optimized/jazzman-1600.avif 1600w",
+    "webp": "/images/optimized/jazzman-400.webp 400w, /images/optimized/jazzman-800.webp 800w, /images/optimized/jazzman-1200.webp 1200w, /images/optimized/jazzman-1600.webp 1600w",
+    "fallback": "/images/optimized/jazzman.jpg"
+  },
+  "philippe.jpg": {
+    "avif": "/images/optimized/philippe-400.avif 400w, /images/optimized/philippe-800.avif 800w, /images/optimized/philippe-1200.avif 1200w, /images/optimized/philippe-1600.avif 1600w",
+    "webp": "/images/optimized/philippe-400.webp 400w, /images/optimized/philippe-800.webp 800w, /images/optimized/philippe-1200.webp 1200w, /images/optimized/philippe-1600.webp 1600w",
+    "fallback": "/images/optimized/philippe.jpg"
+  },
+  "treeeeee-logo.jpg": {
+    "avif": "/images/optimized/treeeeee-logo-400.avif 400w, /images/optimized/treeeeee-logo-800.avif 800w, /images/optimized/treeeeee-logo-1200.avif 1200w, /images/optimized/treeeeee-logo-1600.avif 1600w",
+    "webp": "/images/optimized/treeeeee-logo-400.webp 400w, /images/optimized/treeeeee-logo-800.webp 800w, /images/optimized/treeeeee-logo-1200.webp 1200w, /images/optimized/treeeeee-logo-1600.webp 1600w",
+    "fallback": "/images/optimized/treeeeee-logo.jpg"
+  },
+  "waitingforfreedom.jpg": {
+    "avif": "/images/optimized/waitingforfreedom-400.avif 400w, /images/optimized/waitingforfreedom-800.avif 800w, /images/optimized/waitingforfreedom-1200.avif 1200w, /images/optimized/waitingforfreedom-1600.avif 1600w",
+    "webp": "/images/optimized/waitingforfreedom-400.webp 400w, /images/optimized/waitingforfreedom-800.webp 800w, /images/optimized/waitingforfreedom-1200.webp 1200w, /images/optimized/waitingforfreedom-1600.webp 1600w",
+    "fallback": "/images/optimized/waitingforfreedom.jpg"
+  },
+  "werewolvesoflondon.jpg": {
+    "avif": "/images/optimized/werewolvesoflondon-400.avif 400w, /images/optimized/werewolvesoflondon-800.avif 800w, /images/optimized/werewolvesoflondon-1200.avif 1200w, /images/optimized/werewolvesoflondon-1600.avif 1600w",
+    "webp": "/images/optimized/werewolvesoflondon-400.webp 400w, /images/optimized/werewolvesoflondon-800.webp 800w, /images/optimized/werewolvesoflondon-1200.webp 1200w, /images/optimized/werewolvesoflondon-1600.webp 1600w",
+    "fallback": "/images/optimized/werewolvesoflondon.jpg"
+  },
+  "vaudeville.jpg": {
+    "avif": "/images/optimized/home_slideshow/vaudeville-400.avif 400w, /images/optimized/home_slideshow/vaudeville-800.avif 800w, /images/optimized/home_slideshow/vaudeville-1200.avif 1200w, /images/optimized/home_slideshow/vaudeville-1600.avif 1600w",
+    "webp": "/images/optimized/home_slideshow/vaudeville-400.webp 400w, /images/optimized/home_slideshow/vaudeville-800.webp 800w, /images/optimized/home_slideshow/vaudeville-1200.webp 1200w, /images/optimized/home_slideshow/vaudeville-1600.webp 1600w",
+    "fallback": "/images/optimized/home_slideshow/vaudeville.jpg"
+  },
+  "withollie.jpg": {
+    "avif": "/images/optimized/home_slideshow/withollie-400.avif 400w, /images/optimized/home_slideshow/withollie-800.avif 800w, /images/optimized/home_slideshow/withollie-1200.avif 1200w, /images/optimized/home_slideshow/withollie-1600.avif 1600w",
+    "webp": "/images/optimized/home_slideshow/withollie-400.webp 400w, /images/optimized/home_slideshow/withollie-800.webp 800w, /images/optimized/home_slideshow/withollie-1200.webp 1200w, /images/optimized/home_slideshow/withollie-1600.webp 1600w",
+    "fallback": "/images/optimized/home_slideshow/withollie.jpg"
+  },
+  "withphilippe.jpg": {
+    "avif": "/images/optimized/home_slideshow/withphilippe-400.avif 400w, /images/optimized/home_slideshow/withphilippe-800.avif 800w, /images/optimized/home_slideshow/withphilippe-1200.avif 1200w, /images/optimized/home_slideshow/withphilippe-1600.avif 1600w",
+    "webp": "/images/optimized/home_slideshow/withphilippe-400.webp 400w, /images/optimized/home_slideshow/withphilippe-800.webp 800w, /images/optimized/home_slideshow/withphilippe-1200.webp 1200w, /images/optimized/home_slideshow/withphilippe-1600.webp 1600w",
+    "fallback": "/images/optimized/home_slideshow/withphilippe.jpg"
+  },
+  "zeus-energy.jpg": {
+    "avif": "/images/optimized/home_slideshow/zeus-energy-400.avif 400w, /images/optimized/home_slideshow/zeus-energy-800.avif 800w, /images/optimized/home_slideshow/zeus-energy-1200.avif 1200w, /images/optimized/home_slideshow/zeus-energy-1600.avif 1600w",
+    "webp": "/images/optimized/home_slideshow/zeus-energy-400.webp 400w, /images/optimized/home_slideshow/zeus-energy-800.webp 800w, /images/optimized/home_slideshow/zeus-energy-1200.webp 1200w, /images/optimized/home_slideshow/zeus-energy-1600.webp 1600w",
+    "fallback": "/images/optimized/home_slideshow/zeus-energy.jpg"
+  }
+}
