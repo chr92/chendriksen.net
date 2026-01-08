@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Default sophisticated cyan/teal color for homepage and work list */
+  :root {
+    --color-primary: 186 100% 50%; /* Cyan/Teal (HSL) */
+  }
+
   body {
     @apply bg-background text-text font-sans antialiased;
   }
@@ -19,5 +24,18 @@
   .prose h6 > a,
   .prose a[href^="#"] {
     @apply no-underline;
+  }
+
+  /* Improve visibility of prose links and code in dark mode */
+  .prose a {
+    @apply text-primary font-medium hover:underline;
+  }
+
+  .prose code {
+    @apply text-cyan-300 bg-slate-800 px-1.5 py-0.5 rounded;
+  }
+
+  .prose pre {
+    @apply bg-slate-900 border border-slate-700;
   }
 }

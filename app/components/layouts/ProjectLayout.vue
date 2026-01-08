@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, unref } from 'vue'
+import { computed, unref, onMounted } from 'vue'
 import { resolveOptimizedImage } from '~/composables/useOptimizedImage'
+import { usePageColors } from '~/composables/usePageColors'
 
 const props = defineProps<{
   page: any
@@ -32,6 +33,14 @@ const trimmedBody = computed(() => {
 
 // Provide a content object for the renderer with the trimmed body
 const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.value }))
+
+// Apply dynamic colors from hero image
+const { applyColors } = usePageColors()
+onMounted(() => {
+  if (heroUrl.value) {
+    applyColors(heroUrl.value)
+  }
+})
 </script>
 
 <template>
@@ -51,8 +60,11 @@ const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.va
       
       <div class="container relative flex h-full items-end pb-12">
         <div class="max-w-4xl">
-            <div class="mb-4 flex flex-wrap gap-2" v-if="page.tags">
-                <span v-for="tag in page.tags" :key="tag" class="rounded-full bg-primary/20 px-3 py-1 text-xs font-medium text-primary backdrop-blur-sm">
+            <div class="mb-4 flex flex-wrap items-center gap-3">
+                <span v-if="page.meta?.year || page.year" class="rounded-full bg-primary/40 px-4 py-1.5 text-sm font-bold text-white backdrop-blur-sm border border-primary/60">
+                    {{ page.meta?.year || page.year }}
+                </span>
+                <span v-for="tag in page.tags" :key="tag" class="rounded-full bg-primary/30 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm border border-primary/50">
                     {{ tag }}
                 </span>
             </div>
@@ -69,7 +81,7 @@ const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.va
         <div class="grid gap-16 lg:grid-cols-12">
             <!-- Left: Text Content -->
             <div class="lg:col-span-5">
-                 <div class="prose prose-invert prose-lg">
+                 <div class="prose prose-invert prose-lg max-w-none">
                    <ContentRenderer :value="contentForRenderer" />
                  </div>
             </div>
@@ -77,16 +89,18 @@ const contentForRenderer = computed(() => ({ ...page.value, body: trimmedBody.va
             <!-- Right: Content Image -->
             <div class="lg:col-span-7">
                 <!-- Content Image (render at natural height, don't crop vertically) -->
-                <div v-if="contentImageUrl" class="relative w-full overflow-hidden rounded-lg bg-surface">
-                  <picture v-if="contentImageMapping">
-                    <source type="image/avif" :srcset="contentImageMapping.avif" sizes="(max-width: 768px) 100vw, 50vw" />
-                    <source type="image/webp" :srcset="contentImageMapping.webp" sizes="(max-width: 768px) 100vw, 50vw" />
-                    <img :src="contentImageMapping.fallback" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
-                  </picture>
-                  <img v-else :src="contentImageUrl" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+                <div v-if="contentImageUrl" class="sticky top-24 space-y-6">
+                  <div class="relative w-full overflow-hidden rounded-xl bg-surface shadow-lg ring-1 ring-white/10">
+                    <picture v-if="contentImageMapping">
+                      <source type="image/avif" :srcset="contentImageMapping.avif" sizes="(max-width: 768px) 100vw, 50vw" />
+                      <source type="image/webp" :srcset="contentImageMapping.webp" sizes="(max-width: 768px) 100vw, 50vw" />
+                      <img :src="contentImageMapping.fallback" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+                    </picture>
+                    <img v-else :src="contentImageUrl" :alt="page.title + ' content image'" class="w-full h-auto object-contain" loading="lazy" decoding="async" />
+                  </div>
                 </div>
 
-                <div v-else class="flex items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20">
+                <div v-else class="flex items-center justify-center rounded-lg border border-dashed border-white/10 bg-surface/20 py-24">
                     <p class="text-muted">Image placeholder</p>
                 </div>
             </div>

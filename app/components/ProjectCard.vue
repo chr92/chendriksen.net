@@ -8,11 +8,12 @@ const props = defineProps<{
   image?: string
   path: string
   role?: string
-  meta?: { image?: string }
+  meta?: { image?: string; year?: number }
 }>()
 
 // Nuxt Content stores custom frontmatter fields in meta object
 const imageUrl = props.image || props.meta?.image
+const year = props.meta?.year
 
 const imageKey = computed(() => {
   if (!imageUrl) return null
@@ -40,6 +41,10 @@ const imageMapping = computed(() => (imageKey.value ? optimized[imageKey.value] 
     <div class="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transition-all duration-500 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0">
         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
         <div class="relative z-10">
+            <div v-if="year" class="mb-3 flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-white bg-primary/50 px-2.5 py-1 rounded-full">{{ year }}</span>
+              <div class="h-px flex-1 bg-primary/60"></div>
+            </div>
             <span v-if="role" class="mb-2 block text-xs font-bold uppercase tracking-wider text-primary">{{ role }}</span>
             <h3 class="mb-1 text-2xl font-bold text-white">{{ title }}</h3>
             <p class="line-clamp-2 text-sm text-gray-200">{{ description }}</p>

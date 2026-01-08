@@ -10,7 +10,7 @@ export default <Config>{
             colors: {
                 background: '#0f172a', // Slate 900
                 surface: '#1e293b',   // Slate 800
-                primary: '#6366f1',   // Indigo 500
+                primary: 'hsl(var(--color-primary) / <alpha-value>)',
                 secondary: '#ec4899', // Pink 500
                 text: '#f8fafc',      // Slate 50
                 muted: '#cbd5e1',     // Slate 300 (improved contrast)

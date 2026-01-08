@@ -1,12 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 const sharp = require('sharp')
+const { default: Vibrant } = require('node-vibrant/node')
 
 const publicImagesDir = path.resolve(__dirname, '../public/images')
 const slideshowDir = path.resolve(__dirname, '../app/assets/images/home_slideshow')
 const outDir = path.resolve(__dirname, '../public/images/optimized')
 const assetMappingPath = path.resolve(__dirname, '../app/assets/optimized-images.json')
 const publicMappingPath = path.resolve(outDir, 'images.json')
+const colorDataPath = path.resolve(__dirname, '../app/assets/image-colors.json')
 
 const widths = [400, 800, 1200, 1600]
 const formats = ['avif', 'webp']
@@ -47,9 +49,60 @@ async function processImage(srcPath, relativeOutDir) {
   return { key: basenameKey(srcPath), entry: mappingEntry }
 }
 
+// Extract vibrant color from image
+async function extractColors(imagePath) {
+  try {
+    const palette = await Vibrant.from(imagePath).getPalette()
+    const dominant = palette.Vibrant || palette.Muted || palette.DarkVibrant || palette.DarkMuted
+    
+    if (!dominant) return null
+    
+    const rgb = dominant.getRgb()
+    const hex = dominant.getHex()
+    
+    return {
+      hex,
+      rgb: { r: rgb[0], g: rgb[1], b: rgb[2] },
+      hsl: rgbToHsl(rgb[0], rgb[1], rgb[2])
+    }
+  } catch (err) {
+    console.warn(`Failed to extract colors from ${imagePath}:`, err.message)
+    return null
+  }
+}
+
+// Convert RGB to HSL
+function rgbToHsl(r, g, b) {
+  r /= 255
+  g /= 255
+  b /= 255
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  let h, s, l = (max + min) / 2
+
+  if (max === min) {
+    h = s = 0
+  } else {
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
+      case g: h = ((b - r) / d + 2) / 6; break
+      case b: h = ((r - g) / d + 4) / 6; break
+    }
+  }
+
+  return {
+    h: Math.round(h * 360),
+    s: Math.round(s * 100),
+    l: Math.round(l * 100)
+  }
+}
+
 async function main() {
   ensureDir(outDir)
   const mapping = {}
+  const colorData = {}
 
   // Process public images (top-level)
   if (fs.existsSync(publicImagesDir)) {
@@ -60,6 +113,14 @@ async function main() {
       if (f === 'optimized') continue
       const result = await processImage(srcPath, '')
       mapping[result.key] = result.entry
+      
+      // Extract colors
+      const colors = await extractColors(srcPath)
+      if (colors) {
+        const imageKey = path.basename(srcPath, path.extname(srcPath))
+        colorData[imageKey] = colors
+      }
+      
       console.log('Processed public image', f)
     }
   }
@@ -79,8 +140,10 @@ async function main() {
   ensureDir(path.dirname(publicMappingPath))
   fs.writeFileSync(publicMappingPath, JSON.stringify(mapping, null, 2))
   fs.writeFileSync(assetMappingPath, JSON.stringify(mapping, null, 2))
+  fs.writeFileSync(colorDataPath, JSON.stringify(colorData, null, 2))
 
   console.log('Image generation complete. Mapping written to', publicMappingPath)
+  console.log('Color data written to', colorDataPath)
 }
 
 main().catch(err => {
