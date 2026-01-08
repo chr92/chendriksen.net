@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-01-08T08:23:37.603Z",
-  "baseUrl": "http://localhost:61154",
+  "generatedAt": "2026-01-08T08:38:05.224Z",
+  "baseUrl": "http://localhost:61900",
   "pages": [
     "/",
     "/work",
@@ -25,12 +25,12 @@
     ]
   },
   "requestedImages": [
-    "http://localhost:61154/_nuxt/vaudeville.Cb_3x276.jpg",
-    "http://localhost:61154/images/philippe.jpg",
-    "http://localhost:61154/images/bigzeusposter.png",
-    "http://localhost:61154/images/jazzman.jpg",
-    "http://localhost:61154/images/treeeeee-logo.jpg",
-    "http://localhost:61154/images/waitingforfreedom.jpg",
-    "http://localhost:61154/images/werewolvesoflondon.jpg"
+    "http://localhost:61900/_nuxt/vaudeville.Cb_3x276.jpg",
+    "http://localhost:61900/images/philippe.jpg",
+    "http://localhost:61900/images/bigzeusposter.png",
+    "http://localhost:61900/images/jazzman.jpg",
+    "http://localhost:61900/images/treeeeee-logo.jpg",
+    "http://localhost:61900/images/waitingforfreedom.jpg",
+    "http://localhost:61900/images/werewolvesoflondon.jpg"
   ]
 }
