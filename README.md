@@ -14,7 +14,7 @@
 This repo stores site content as Markdown files under the `content/` folder. Follow these notes when editing content or adding new pages.
 
 - Homepage content
-  - The homepage components live under `app/components/` (e.g. `HomeSlideshow.vue`, `ProjectGrid.vue`).
+  - The homepage components live under `src/components/` (e.g. `HomeSlideshow.tsx`, `ProjectGrid.tsx`).
   - The slideshow uses images from `app/assets/images/home_slideshow/` and the generator will create optimized variants under `public/images/optimized/home_slideshow/` when you run `npm run gen:images`.
 
 - Adding a `work` page
@@ -40,11 +40,11 @@ tags: ["theatre", "clown"]
 ```
 
 - Work page structure
-  - The page layout (`app/components/layouts/ProjectLayout.vue`) displays a hero/header (from `headerImage`) and a content image (the `image` field — this keeps the homepage / cards consistent with the image next to the text).
+  - The page layout (`src/components/ProjectLayout.tsx`) displays a hero/header (from `headerImage`) and a content image (the `image` field — this keeps the homepage / cards consistent with the image next to the text).
   - The page content body is the Markdown content; the layout trims the top-level H1 from the Markdown so the hero title is the authoritative page title.
 
 - How projects are selected for the homepage
-  - The homepage component `app/components/ProjectGrid.vue` queries the content API:
+  - The homepage component `src/components/ProjectGrid.tsx` queries the content API:
 
 ```js
 queryCollection('content')
@@ -53,7 +53,7 @@ queryCollection('content')
   .all()
 ```
 
-  - This means by default the homepage shows up to 6 `content/work/*` pages. To change selection criteria (e.g. only show pages with `navigation: true`, or sort by a `date` field), edit `ProjectGrid.vue` and modify the query accordingly.
+  - This means by default the homepage shows up to 6 `content/work/*` pages. To change selection criteria (e.g. only show pages with `navigation: true`, or sort by a `date` field), edit `src/components/ProjectGrid.tsx` and modify the query accordingly.
 
 ## Images & optimized assets
 
