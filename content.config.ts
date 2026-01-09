@@ -1,10 +1,3 @@
-import { defineContentConfig, defineCollection } from '@nuxt/content'
+// This file was used by Nuxt Content. Removed during migration to Next.js + Contentlayer.
 
-export default defineContentConfig({
-  collections: {
-    content: defineCollection({
-      type: 'page',
-      source: '**',
-    }),
-  },
-})
+export default {}

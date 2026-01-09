@@ -1,6 +1,14 @@
 # Christiaan Hendriksen personal website
 --
 
+> Migration: This repository was migrated from Nuxt (Vue) to Next.js (React). For development run content and Next.js together:
+>
+> - One-command (recommended): `npm run dev:all` (runs Contentlayer + Next.js concurrently)
+> - Or in two consoles: `npx contentlayer dev` and `npm run dev`
+>
+> Production build runs Contentlayer first automatically via `npm run build` (runs `npm run content:build && next build`).
+
+
 ## Content — editing & site structure
 
 This repo stores site content as Markdown files under the `content/` folder. Follow these notes when editing content or adding new pages.

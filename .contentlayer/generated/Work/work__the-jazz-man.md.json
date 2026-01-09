@@ -1,0 +1,21 @@
+{
+  "title": "The Jazz Man",
+  "description": "What is Jazz?",
+  "image": "/images/jazzman.jpg",
+  "headerImage": "/images/jazzman.jpg",
+  "year": 2020,
+  "body": {
+    "raw": "\n# The Jazz Man\n\n(Live performance & YouTube Series)\n\n'What is Jazz?' is a comedy web series. Be enlightened by a man described by some as 'The Prophet of Jazz'. The Jazz Man shares clips from his Online Course, whilst struggling to get anyone to distribute it, and give it the audience it deserves. \n\n'The Jazz Man' is a live comedy character develped by Christiaan Hendriksen. During the COVID-19 lockdowns, Christiaan created a short web series converting some of the live content into videos, to give him something to do and not lose his mind. It achieved one of these goals.\n\n::iframe{src=\"https://www.youtube.com/embed/2mTAhwvKDXw\" width=\"100%\" height=\"560\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen}\n::",
+    "html": "<h1>The Jazz Man</h1>\n<p>(Live performance &#x26; YouTube Series)</p>\n<p>'What is Jazz?' is a comedy web series. Be enlightened by a man described by some as 'The Prophet of Jazz'. The Jazz Man shares clips from his Online Course, whilst struggling to get anyone to distribute it, and give it the audience it deserves.</p>\n<p>'The Jazz Man' is a live comedy character develped by Christiaan Hendriksen. During the COVID-19 lockdowns, Christiaan created a short web series converting some of the live content into videos, to give him something to do and not lose his mind. It achieved one of these goals.</p>\n<p>::iframe{src=\"https://www.youtube.com/embed/2mTAhwvKDXw\" width=\"100%\" height=\"560\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen}\n::</p>"
+  },
+  "_id": "work/the-jazz-man.md",
+  "_raw": {
+    "sourceFilePath": "work/the-jazz-man.md",
+    "sourceFileName": "the-jazz-man.md",
+    "sourceFileDir": "work",
+    "contentType": "markdown",
+    "flattenedPath": "work/the-jazz-man"
+  },
+  "type": "Work",
+  "slug": "the-jazz-man"
+}

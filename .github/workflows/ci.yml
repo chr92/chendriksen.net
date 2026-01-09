@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run content:build
+      - run: npm run build
+      - name: Run preview server in background
+        run: |
+          npm run preview -- -p 61900 &
+          sleep 3
+      - name: Run Lighthouse
+        env:
+          BASE_URL: http://localhost:61900
+        run: |
+          npx -y lighthouse "$BASE_URL" --quiet --output json --output-path=lighthouse-report.json --chrome-flags="--headless --no-sandbox" --only-categories=performance,accessibility,best-practices,seo || true
+      - run: npm run lint || true

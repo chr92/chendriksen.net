@@ -1,7 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 const sharp = require('sharp')
-const { default: Vibrant } = require('node-vibrant/node')
+
+// Color extraction: use Sharp stats to compute an average color. This keeps
+// the script deterministic and avoids fragile ESM/CJS interop issues with
+// optional palette libraries. We can add a palette step later if desired.
+
 
 const publicImagesDir = path.resolve(__dirname, '../public/images')
 const slideshowDir = path.resolve(__dirname, '../app/assets/images/home_slideshow')
@@ -49,26 +53,29 @@ async function processImage(srcPath, relativeOutDir) {
   return { key: basenameKey(srcPath), entry: mappingEntry }
 }
 
-// Extract vibrant color from image
+// Extract color information from image
 async function extractColors(imagePath) {
+  // Compute average color using Sharp stats (fast and reliable without extra deps)
   try {
-    const palette = await Vibrant.from(imagePath).getPalette()
-    const dominant = palette.Vibrant || palette.Muted || palette.DarkVibrant || palette.DarkMuted
-    
-    if (!dominant) return null
-    
-    const rgb = dominant.getRgb()
-    const hex = dominant.getHex()
-    
+    const stats = await sharp(imagePath).stats()
+    const r = stats.channels[0].mean
+    const g = stats.channels[1].mean
+    const b = stats.channels[2].mean
+    const hex = rgbToHex(Math.round(r), Math.round(g), Math.round(b))
     return {
       hex,
-      rgb: { r: rgb[0], g: rgb[1], b: rgb[2] },
-      hsl: rgbToHsl(rgb[0], rgb[1], rgb[2])
+      rgb: { r: Math.round(r), g: Math.round(g), b: Math.round(b) },
+      hsl: rgbToHsl(r, g, b)
     }
   } catch (err) {
-    console.warn(`Failed to extract colors from ${imagePath}:`, err.message)
+    console.warn(`Sharp color extraction failed for ${imagePath}:`, err && err.message ? err.message : err)
     return null
   }
+}
+
+// Helper to convert RGB -> HEX
+function rgbToHex(r, g, b) {
+  return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('')
 }
 
 // Convert RGB to HSL
@@ -114,11 +121,14 @@ async function main() {
       const result = await processImage(srcPath, '')
       mapping[result.key] = result.entry
       
-      // Extract colors
-      const colors = await extractColors(srcPath)
-      if (colors) {
-        const imageKey = path.basename(srcPath, path.extname(srcPath))
-        colorData[imageKey] = colors
+// Extract colors (fallback to default if extraction fails)
+    const colors = await extractColors(srcPath)
+    const imageKey = path.basename(srcPath, path.extname(srcPath))
+    if (colors) {
+      colorData[imageKey] = colors
+    } else {
+      // default to cyan-ish HSL used as a safe fallback
+      colorData[imageKey] = { hex: '#00bcd4', rgb: { r: 0, g: 188, b: 212 }, hsl: { h: 186, s: 100, l: 50 } }
       }
       
       console.log('Processed public image', f)

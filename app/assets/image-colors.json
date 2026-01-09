@@ -1,37 +1,93 @@
 {
-  "waitingforfreedom.jpg": {
-    "hex": "#2d5a3d",
-    "rgb": { "r": 45, "g": 90, "b": 61 },
-    "hsl": { "h": 142, "s": 33, "l": 27 }
+  "bigzeusposter": {
+    "hex": "#3a3f54",
+    "rgb": {
+      "r": 58,
+      "g": 63,
+      "b": 84
+    },
+    "hsl": {
+      "h": 229,
+      "s": 19,
+      "l": 28
+    }
   },
-  "treeeeee-logo.jpg": {
-    "hex": "#1b7c3e",
-    "rgb": { "r": 27, "g": 124, "b": 62 },
-    "hsl": { "h": 145, "s": 65, "l": 30 }
+  "christiaan": {
+    "hex": "#5e5b3c",
+    "rgb": {
+      "r": 94,
+      "g": 91,
+      "b": 60
+    },
+    "hsl": {
+      "h": 56,
+      "s": 22,
+      "l": 30
+    }
   },
-  "werewolvesoflondon.jpg": {
-    "hex": "#3d2a1a",
-    "rgb": { "r": 61, "g": 42, "b": 26 },
-    "hsl": { "h": 22, "s": 41, "l": 17 }
+  "jazzman": {
+    "hex": "#4f4f4f",
+    "rgb": {
+      "r": 79,
+      "g": 79,
+      "b": 79
+    },
+    "hsl": {
+      "h": 0,
+      "s": 0,
+      "l": 31
+    }
   },
-  "bigzeusposter.png": {
-    "hex": "#ff6b35",
-    "rgb": { "r": 255, "g": 107, "b": 53 },
-    "hsl": { "h": 16, "s": 100, "l": 60 }
+  "philippe": {
+    "hex": "#554e4e",
+    "rgb": {
+      "r": 85,
+      "g": 78,
+      "b": 78
+    },
+    "hsl": {
+      "h": 4,
+      "s": 5,
+      "l": 32
+    }
   },
-  "philippe.jpg": {
-    "hex": "#5a4a3a",
-    "rgb": { "r": 90, "g": 74, "b": 58 },
-    "hsl": { "h": 22, "s": 21, "l": 29 }
+  "treeeeee-logo": {
+    "hex": "#69773a",
+    "rgb": {
+      "r": 105,
+      "g": 119,
+      "b": 58
+    },
+    "hsl": {
+      "h": 74,
+      "s": 35,
+      "l": 35
+    }
   },
-  "jazzman.jpg": {
-    "hex": "#1a1a2e",
-    "rgb": { "r": 26, "g": 26, "b": 46 },
-    "hsl": { "h": 240, "s": 28, "l": 14 }
+  "waitingforfreedom": {
+    "hex": "#acb8c3",
+    "rgb": {
+      "r": 172,
+      "g": 184,
+      "b": 195
+    },
+    "hsl": {
+      "h": 208,
+      "s": 16,
+      "l": 72
+    }
   },
-  "christiaan.jpg": {
-    "hex": "#6b4d3d",
-    "rgb": { "r": 107, "g": 77, "b": 61 },
-    "hsl": { "h": 20, "s": 28, "l": 33 }
+  "werewolvesoflondon": {
+    "hex": "#73655e",
+    "rgb": {
+      "r": 115,
+      "g": 101,
+      "b": 94
+    },
+    "hsl": {
+      "h": 22,
+      "s": 10,
+      "l": 41
+    }
   }
 }
