@@ -1,0 +1,27 @@
+{
+  "name": "chendriksen-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "gen:images": "node scripts/image-gen.cjs",
+    "coverage": "node scripts/coverage.cjs",
+    "lighthouse": "npx lighthouse $BASE_URL --quiet --output json --output-path=lighthouse-report.json --chrome-flags=\"--headless\" --only-categories=performance,accessibility,best-practices,seo",
+    "perf:e2e": "node scripts/perf-e2e.cjs"
+  },
+  "dependencies": {
+    "@nuxt/content": "^3.10.0",
+    "better-sqlite3": "^12.5.0",
+    "nuxt": "^4.2.2"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "puppeteer": "^24.34.0",
+    "sharp": "^0.34.5"
+  }
+}
