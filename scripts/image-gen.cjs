@@ -21,6 +21,38 @@ function basenameKey(filePath) {
   return path.basename(filePath)
 }
 
+// Check if image has already been optimized
+function isAlreadyProcessed(srcPath, relativeOutDir) {
+  const name = path.basename(srcPath, path.extname(srcPath))
+  const outSubdir = path.join(outDir, relativeOutDir || '')
+  
+  // Check if the smallest AVIF exists (quick check)
+  const checkFile = path.join(outSubdir, `${name}-400.avif`)
+  if (!fs.existsSync(checkFile)) return false
+  
+  // Check if source is newer than output
+  const srcStat = fs.statSync(srcPath)
+  const outStat = fs.statSync(checkFile)
+  return srcStat.mtime <= outStat.mtime
+}
+
+// Get existing mapping entry without reprocessing
+function getExistingMapping(srcPath, relativeOutDir) {
+  const name = path.basename(srcPath, path.extname(srcPath))
+  const originalExt = path.extname(srcPath).slice(1)
+  const prefix = relativeOutDir ? relativeOutDir + '/' : ''
+  
+  const mappingEntry = { avif: [], webp: [], fallback: '' }
+  
+  for (const f of formats) {
+    const srcset = widths.map(w => `/images/optimized/${prefix}${name}-${w}.${f} ${w}w`)
+    mappingEntry[f] = srcset.join(', ')
+  }
+  
+  mappingEntry.fallback = `/images/optimized/${prefix}${name}.${originalExt}`
+  return mappingEntry
+}
+
 async function processImage(srcPath, relativeOutDir) {
   const name = path.basename(srcPath, path.extname(srcPath))
   const outSubdir = path.join(outDir, relativeOutDir || '')
@@ -87,6 +119,16 @@ async function main() {
   ensureDir(outDir)
   const mapping = {}
   const colorData = {}
+  let processedCount = 0
+  let skippedCount = 0
+
+  // Load existing color data to preserve it
+  let existingColorData = {}
+  if (fs.existsSync(colorDataPath)) {
+    try {
+      existingColorData = JSON.parse(fs.readFileSync(colorDataPath, 'utf-8'))
+    } catch (e) {}
+  }
 
   // Process public images (top-level)
   if (fs.existsSync(publicImagesDir)) {
@@ -95,17 +137,28 @@ async function main() {
       const srcPath = path.join(publicImagesDir, f)
       // skip optimized folder if already present
       if (f === 'optimized') continue
+      
+      const imageKey = path.basename(srcPath, path.extname(srcPath))
+      
+      // Skip if already processed
+      if (isAlreadyProcessed(srcPath, '')) {
+        mapping[basenameKey(srcPath)] = getExistingMapping(srcPath, '')
+        colorData[imageKey] = existingColorData[imageKey] || null
+        skippedCount++
+        continue
+      }
+      
       const result = await processImage(srcPath, '')
       mapping[result.key] = result.entry
       
       // Extract colors
       const colors = await extractColors(srcPath)
       if (colors) {
-        const imageKey = path.basename(srcPath, path.extname(srcPath))
         colorData[imageKey] = colors
       }
       
       console.log('Processed public image', f)
+      processedCount++
     }
   }
 
@@ -114,9 +167,18 @@ async function main() {
     const files = fs.readdirSync(slideshowDir).filter(f => /\.(jpe?g|png)$/i.test(f))
     for (const f of files) {
       const srcPath = path.join(slideshowDir, f)
+      
+      // Skip if already processed
+      if (isAlreadyProcessed(srcPath, 'home_slideshow')) {
+        mapping[basenameKey(srcPath)] = getExistingMapping(srcPath, 'home_slideshow')
+        skippedCount++
+        continue
+      }
+      
       const result = await processImage(srcPath, 'home_slideshow')
       mapping[result.key] = result.entry
       console.log('Processed slideshow image', f)
+      processedCount++
     }
   }
 
@@ -126,8 +188,7 @@ async function main() {
   fs.writeFileSync(assetMappingPath, JSON.stringify(mapping, null, 2))
   fs.writeFileSync(colorDataPath, JSON.stringify(colorData, null, 2))
 
-  console.log('Image generation complete. Mapping written to', publicMappingPath)
-  console.log('Color data written to', colorDataPath)
+  console.log(`Image generation complete: ${processedCount} processed, ${skippedCount} skipped (already up-to-date)`)
 }
 
 main().catch(err => {
