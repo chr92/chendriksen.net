@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  /* Page fade transition */
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .fade-enter-from, .fade-leave-to {
+    opacity: 0;
+  }
+  .fade-enter-to, .fade-leave-from {
+    opacity: 1;
+  }
   /* Default sophisticated cyan/teal color for homepage and work list */
   :root {
     --color-primary: 186 100% 50%; /* Cyan/Teal (HSL) */

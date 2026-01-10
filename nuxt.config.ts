@@ -14,4 +14,11 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'vercel_static',
   },
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+      ]
+    }
+  },
 })
