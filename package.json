@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "content:dev": "contentlayer dev",
-    "content:build": "contentlayer build",
+    "content:build": "node scripts/contentlayer-build.mjs",
     "dev": "next dev",
     "dev:all": "concurrently \"npm run content:dev\" \"npm run dev\"",
     "build": "npm run content:build && next build",
@@ -21,9 +21,6 @@
     "react-dom": "^18.2.0",
     "contentlayer": "^0.3.4",
     "@contentlayer/source-files": "^0.3.4"
-  },
-  "engines": {
-    "node": "20.x"
   },
   "devDependencies": {
     "typescript": "^5.1.6",
