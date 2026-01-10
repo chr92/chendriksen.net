@@ -16,6 +16,7 @@
   "dependencies": {
     "@nuxt/content": "^3.10.0",
     "better-sqlite3": "^12.6.0",
+    "gray-matter": "^4.0.3",
     "node-vibrant": "^4.0.3",
     "nuxt": "^4.2.2",
     "posthog-js": "^1.318.1"
