@@ -2,13 +2,25 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
 
+// Get __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // Dynamically load all work project frontmatter from markdown files
-function getWorkProjects() {
+interface WorkProject {
+  title: string
+  year: string
+  description: string
+  slug: string
+}
+
+function getWorkProjects(): WorkProject[] {
   const dir = path.resolve(__dirname, '../content/work');
-  const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
-  return files.map(filename => {
+  const files = fs.readdirSync(dir).filter((f: string) => f.endsWith('.md'));
+  return files.map((filename: string) => {
     const file = fs.readFileSync(path.join(dir, filename), 'utf-8');
     const { data } = matter(file);
     return {
@@ -43,20 +55,20 @@ test.describe('Site basic functionality', () => {
     const cards = page.locator('[data-testid="project-card"]');
     await expect(cards).toHaveCount(6);
     // Dynamically get card data from DOM and compare to markdown data (order-agnostic)
-    const foundTitles = [];
+    const foundTitles: string[] = [];
     for (let i = 0; i < await cards.count(); i++) {
       const card = cards.nth(i);
       const cardText = (await card.innerText()).replace(/\s+/g, ' ');
       // Find a matching project for this card
-      const match = latestProjects.find(p => cardText.includes(p.title) && cardText.includes(p.description) && cardText.includes(p.year));
+      const match = latestProjects.find((p: WorkProject) => cardText.includes(p.title) && cardText.includes(p.description) && cardText.includes(p.year));
       expect(match).toBeTruthy();
-      foundTitles.push(match.title);
+      foundTitles.push(match?.title || '');
       // Check image loads
       const img = card.locator('img');
       await expect(img).toBeVisible();
     }
     // Ensure all markdown projects are present
-    expect(foundTitles.sort()).toEqual(latestProjects.map(p => p.title).sort());
+    expect(foundTitles.sort()).toEqual(latestProjects.map((p: WorkProject) => p.title).sort());
   });
 
   test('Individual work pages render correctly', async ({ page }) => {

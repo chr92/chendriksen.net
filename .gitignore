@@ -48,8 +48,10 @@ Desktop.ini
 *.swp
 *.swo
 
-# Testing
+# Testing & Performance Reports
 coverage/
+coverage-report.json
+lighthouse-report.json
 
 # Misc
 *.tsbuildinfo

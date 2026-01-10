@@ -27,6 +27,7 @@
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@playwright/test": "^1.57.0",
     "@tailwindcss/typography": "^0.5.19",
+    "@types/node": "^25.0.5",
     "playwright": "^1.57.0",
     "puppeteer": "^24.34.0",
     "sharp": "^0.34.5"

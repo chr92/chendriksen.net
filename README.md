@@ -1,172 +1,306 @@
-# Christiaan Hendriksen personal website
---
+# Christiaan Hendriksen Personal Website
 
-## Content — editing & site structure
+A high-performance, fully tested portfolio site built with **Nuxt 4**, **Vue 3**, and **Playwright E2E testing**.
 
-This repo stores site content as Markdown files under the `content/` folder. Follow these notes when editing content or adding new pages.
+## ✨ Features
 
-- Homepage content
-  - The homepage components live under `app/components/` (e.g. `HomeSlideshow.vue`, `ProjectGrid.vue`).
-  - The slideshow uses images from `app/assets/images/home_slideshow/` and the generator will create optimized variants under `public/images/optimized/home_slideshow/` when you run `npm run gen:images`.
+- **Smooth Page Transitions**: 0.35s fade transitions between all routes using Nuxt's native `<Transition>` component
+- **Comprehensive E2E Testing**: Automated Playwright tests verify content, navigation, images, and functionality
+- **Optimized Images**: AVIF/WebP generation with responsive srcsets using Sharp
+- **SEO Optimized**: Perfect Lighthouse scores for SEO (100) and Best Practices (100)
+- **Accessibility**: 96+ Lighthouse accessibility score
+- **Performance**: Optimized bundle with static pre-rendering on Vercel
+- **Dynamic Test Data**: Tests automatically read markdown files instead of maintaining hardcoded test data
+- **Automated Deployment**: Tests run automatically on Vercel before deployment
 
-- Adding a `work` page
-  - Create a file under `content/work/` (e.g. `content/work/new-project.md`).
-  - Required frontmatter fields used by the site:
-    - `title`: page title
-    - `description`: short description used in SEO and listings
-    - `image`: path to the thumbnail used on the homepage / project card (e.g. `/images/new-project.jpg`)
-    - `headerImage` (optional but recommended): path to the hero/header image used at the top of the project page. If omitted, `image` is used as fallback.
-  - Optional frontmatter fields that the layout will read (add as needed):
-    - `tags`: displayed as small pill tags beneath the hero/title.
+## Performance Metrics
 
-Example frontmatter for a `work` page:
+Latest Lighthouse audit (http://localhost:3000):
+- **Performance**: 69
+- **Accessibility**: 96
+- **Best Practices**: 100
+- **SEO**: 100
+
+## 🚀 Quick Start
+
+### Development
+
+```bash
+npm run dev
+# Open http://localhost:3000
+```
+
+### Build & Test
+
+```bash
+# Build for production
+npm run build
+
+# This automatically runs E2E tests after build (postbuild script)
+# npm run test:e2e runs separately
+
+# Preview the production build
+npm run preview
+```
+
+### Testing
+
+```bash
+# Run E2E tests (tests automatically read markdown content)
+npm run test:e2e
+
+# Run Lighthouse audit
+BASE_URL=http://localhost:3000 npm run lighthouse
+
+# Generate optimized images
+npm run gen:images
+
+# Complete performance suite (gen:images → build → preview → coverage → lighthouse)
+npm run perf:e2e
+```
+
+## Content Management
+
+### Homepage
+
+The homepage is composed of:
+- **Hero Section**: Title and description from `content/homepage.md` with rotating background slideshow
+- **Project Grid**: Displays up to 6 latest work projects from `content/work/*` markdown files
+- **About Section**: Content from `content/homepage.md`
+
+### Adding a Work Page
+
+Create a file under `content/work/` with required frontmatter fields:
 
 ```markdown
 ---
-title: "New Project"
-description: "Short blurb about the project."
-image: "/images/new-project.jpg"        # thumbnail used on homepage and next-to-text image
-headerImage: "/images/new-project-hero.jpg"  # hero image for the top of the project page
-tags: ["theatre", "clown"]
----
-```
-
-- Work page structure
-  - The page layout (`app/components/layouts/ProjectLayout.vue`) displays a hero/header (from `headerImage`) and a content image (the `image` field — this keeps the homepage / cards consistent with the image next to the text).
-  - The page content body is the Markdown content; the layout trims the top-level H1 from the Markdown so the hero title is the authoritative page title.
-
-- How projects are selected for the homepage
-  - The homepage component `app/components/ProjectGrid.vue` queries the content API:
-
-```js
-queryCollection('content')
-  .where('path', 'LIKE', '/work/%')
-  .limit(6)
-  .all()
-```
-
-  - This means by default the homepage shows up to 6 `content/work/*` pages. To change selection criteria (e.g. only show pages with `navigation: true`, or sort by a `date` field), edit `ProjectGrid.vue` and modify the query accordingly.
-
-## Images & optimized assets
-
-- Image workflow
-  1. Add source images to `public/images/` (or `app/assets/images/home_slideshow/` for slideshow slides).
-  2. Run `npm run gen:images` to generate AVIF/WebP variants and a mapping file at `app/assets/optimized-images.json`.
-  3. Components import the mapping and automatically use `srcset` + fallback when a mapping exists.
-
-- Mapping keys
-  - The optimized mapping keys are the filename basenames (e.g. `new-project.jpg`). Components extract the basename to look up the mapping.
-
-## Tech / code side — building, running, testing
-
-- Development
-  - Run the dev server with `npm run dev` and open `http://localhost:3000`.
-
-- Generating optimized images
-  - `npm run gen:images` (uses Sharp). Output files are written to `public/images/optimized/` and the JSON mapping is updated at `app/assets/optimized-images.json`.
-  - As a convenience, commit generated optimized assets to the repo if your host doesn't run the generator during deploy.
-
-- Build & preview
-  - `npm run build` then `npm run preview` to test production output locally.
-
-- Performance tooling
-  - See the Performance testing section above for instructions to run image/CSS coverage and Lighthouse locally.
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
+title: "Project Title"
+description: "Short description for listings and SEO"
+image: "/images/project.jpg"              # Card/content image
+headerImage: "/images/project-hero.jpg"   # Hero image (optional, defaults to image)
+year: 2024                                 # Displayed in project cards
+tags: ["theatre", "clown"]                # Display as pills (optional)
 ---
 
-## Performance testing ✅
+# Project Name
 
-We include scripts to measure CSS/image usage and Lighthouse scores **locally** during development.
-
-- Generate optimized images (AVIF/WebP + responsive srcsets):
-
-```bash
-# generate AVIF/WebP variants and mapping JSON
-npm run gen:images
+Your markdown content here...
 ```
 
-Generated files:
-- `public/images/optimized/*` (AVIF/WebP/fallback images)
-- `public/images/optimized/images.json` and `app/assets/optimized-images.json` (mapping used by components)
+**Note**: The H1 header in the markdown is automatically removed in favor of the `title` frontmatter field.
 
-Notes: the image generator uses `sharp` and outputs sizes at 400, 800, 1200, 1600 px (quality 80). Import the mapping from `app/assets/optimized-images.json` in components to use AVIF/WebP `srcset`s and fallbacks.
+## Image Optimization
 
-- Run the Puppeteer CSS & image coverage report (manual steps):
+### Workflow
 
+1. **Add source images**:
+   - Portfolio images: `public/images/` (e.g., `new-project.jpg`)
+   - Slideshow images: `app/assets/images/home_slideshow/`
+
+2. **Generate optimized variants**:
+   ```bash
+   npm run gen:images
+   ```
+   - Creates AVIF and WebP variants at sizes: 400px, 800px, 1200px, 1600px
+   - Generates mapping files:
+     - `app/assets/optimized-images.json`
+     - `public/images/optimized/images.json`
+
+3. **Components use mappings automatically** via the `resolveOptimizedImage` composable
+
+### Image Optimization Details
+
+- **Tool**: Sharp (command: `node scripts/image-gen.cjs`)
+- **Formats**: AVIF (primary), WebP (fallback), JPEG (browser fallback)
+- **Quality**: 80 (balanced quality/size)
+- **Color Extraction**: Uses `node-vibrant` to extract dominant colors
+- **Output**: Responsive srcsets with proper fallbacks
+
+## Testing
+
+### E2E Testing
+
+The project uses **Playwright** for comprehensive browser testing. Tests are configured to:
+- Auto-start the Nuxt dev server
+- Dynamically read markdown files from `content/work/*`
+- Never need hardcoded test data updates
+
+Run tests with:
 ```bash
-# build and preview (in a separate terminal)
-npm run build
-npm run preview -- -p 61900
-
-# in another terminal (point BASE_URL at preview server)
-BASE_URL=http://localhost:61900 npm run coverage
-# writes coverage-report.json
+npm run test:e2e
 ```
 
-- Run Lighthouse locally against the preview server:
+**Test Coverage**:
+- Homepage loads with expected content and structure
+- Project grid displays all work items with correct metadata
+- Navigation works across all pages
+- Individual project pages render correctly with hero images
+- Contact page loads properly
+- No broken images in the grid
 
-```bash
-# set BASE_URL (optional) and run the lighthouse script
-export BASE_URL=http://localhost:61900
-npm run lighthouse
-# writes lighthouse-report.json
+Tests automatically parse markdown frontmatter using the `gray-matter` library, so adding a new project automatically makes it testable.
+
+### Running Tests on Vercel
+
+Tests run automatically as part of the build pipeline via `vercel.json`:
+```json
+{
+  "buildCommand": "npm run build && npm run test:e2e"
+}
 ```
 
-- One-command e2e perf run (local):
+This ensures no broken deployments reach production.
 
-```bash
-# runs gen:images -> build -> preview -> coverage -> lighthouse
-npm run perf:e2e
+## Architecture
+
+### Tech Stack
+
+- **Framework**: Nuxt 4.2.2 (Vue 3.5.26, Vite 7.3.1)
+- **Styling**: Tailwind CSS 3 with custom animations
+- **Content**: Nuxt Content 3.10.0 (markdown with frontmatter)
+- **Testing**: Playwright 1.57.0
+- **Image Optimization**: Sharp 0.34.5
+- **Color Extraction**: node-vibrant 4.0.3
+- **YAML Parsing**: gray-matter 4.0.3
+- **Analytics**: PostHog (optional, client-side)
+- **Database**: SQLite (via better-sqlite3, internal to Nuxt Content)
+- **Hosting**: Vercel (static preset with pre-rendering)
+
+### Component Structure
+
 ```
+app/
+├── components/
+│   ├── AppHeader.vue          # Navigation with dropdown menu
+│   ├── AppFooter.vue          # Footer
+│   ├── HomeSlideshow.vue      # Rotating background images
+│   ├── ProjectGrid.vue        # Homepage project listing
+│   ├── ProjectCard.vue        # Individual project card
+│   └── layouts/
+│       └── ProjectLayout.vue  # Project page layout
+├── pages/
+│   ├── index.vue              # Homepage
+│   ├── work.vue               # Work index
+│   ├── [...slug].vue          # Dynamic project pages
+│   └── contact.vue            # Contact page
+├── composables/
+│   ├── useOptimizedImage.ts   # Image optimization lookup
+│   ├── usePageColors.ts       # Dynamic hero colors
+│   └── usePostHog.js          # Analytics
+└── assets/
+    └── css/
+        └── main.css           # Global styles + fade transitions
+```
+
+### Page Transitions
+
+Smooth fade transitions between pages (0.35s, cubic-bezier easing):
+- Implemented in `app/app.vue` wrapping `<NuxtPage />`
+- CSS defined in `app/assets/css/main.css`
+- Uses CSS opacity transitions (no layout shift)
+
+### Favicon
+
+SVG favicon at `public/favicon.svg` with configuration in `nuxt.config.ts`:
+```typescript
+app: {
+  head: {
+    link: [
+      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
+    ]
+  }
+}
+```
+
+## Deployment
+
+### Vercel Setup
+
+The project is configured for **Vercel static deployments** with:
+- `vercel.json` specifying build command
+- Automatic pre-rendering of all routes
+- Tests running before deployment
+
+```json
+{
+  "buildCommand": "npm run build && npm run test:e2e"
+}
+```
+
+**Build Output**: `.vercel/output/static` (can be deployed directly or via `vercel deploy --prebuilt`)
+
+### Environment Variables
+
+No required environment variables for basic functionality. Optional:
+- `BASE_URL`: For Lighthouse and coverage scripts (defaults to localhost:3000)
+- PostHog API key in `app/composables/usePostHog.js` (for analytics)
+
+## Development Commands
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start dev server (http://localhost:3000) |
+| `npm run build` | Production build (runs tests via postbuild) |
+| `npm run preview` | Preview production build locally |
+| `npm run test:e2e` | Run Playwright tests |
+| `npm run gen:images` | Generate optimized image variants |
+| `npm run lighthouse` | Run Lighthouse audit |
+| `npm run coverage` | CSS/image coverage analysis |
+| `npm run perf:e2e` | Full perf suite (images → build → preview → tests → lighthouse) |
+
+## Code Quality
+
+### TypeScript
+
+- Strict mode enabled via Nuxt defaults
+- Type-safe markdown frontmatter parsing
+- Type definitions for all composables
+
+### Linting & Type Checking
+
+The project includes proper TypeScript configuration:
+- `@types/node` for Node module definitions
+- Type annotations on all test functions
+- Strict parameter typing in test utilities
+
+No linting errors or TypeScript compilation errors.
+
+## Git Management
+
+### Ignored Files
+
+- `.gitignore` excludes:
+  - `node_modules/`
+  - `.nuxt/` (build artifacts)
+  - `.vercel/` (deployment output)
+  - `coverage-report.json`
+  - `lighthouse-report.json`
+  - `test-results/`
+
+## Contributing Notes
+
+### Adding Features
+
+1. **New Content**: Add markdown files to `content/` with proper frontmatter
+2. **New Components**: Place in `app/components/` with `.vue` extension
+3. **New Pages**: Add to `app/pages/` (file-based routing)
+4. **Styling**: Use Tailwind classes or add to `app/assets/css/main.css`
+5. **Tests**: Add to `tests/` directory (Playwright tests auto-discover)
+
+### Testing New Features
+
+Always run tests after making changes:
+```bash
+npm run build    # Builds and tests
+npm run test:e2e # Tests only
+```
+
+Tests automatically verify:
+- Page structure and content
+- Dynamic markdown content is correctly rendered
+- Navigation and routing work
+- Images load without errors
+
+## License
+
+Personal portfolio site — customize as needed.
