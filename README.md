@@ -1,203 +1,119 @@
-# Christiaan Hendriksen Personal Website
+# Christiaan Hendriksen Portfolio
 
-A high-performance, fully tested portfolio site built with **Nuxt 4**, **Vue 3**, and **Playwright E2E testing**.
+A portfolio site built with Nuxt 4, Vue 3, and Tailwind CSS.
 
-## ✨ Features
-
-- **Smooth Page Transitions**: 0.35s fade transitions between all routes using Nuxt's native `<Transition>` component
-- **Comprehensive E2E Testing**: Automated Playwright tests verify content, navigation, images, and functionality
-- **Optimized Images**: AVIF/WebP generation with responsive srcsets using Sharp
-- **SEO Optimized**: Perfect Lighthouse scores for SEO (100) and Best Practices (100)
-- **Accessibility**: 96+ Lighthouse accessibility score
-- **Performance**: Optimized bundle with static pre-rendering on Vercel
-- **Dynamic Test Data**: Tests automatically read markdown files instead of maintaining hardcoded test data
-- **Automated Deployment**: Tests run automatically on Vercel before deployment
-
-## Performance Metrics
-
-Latest Lighthouse audit (http://localhost:3000):
-- **Performance**: 69
-- **Accessibility**: 96
-- **Best Practices**: 100
-- **SEO**: 100
-
-## 🚀 Quick Start
-
-### Development
+## Quick Start
 
 ```bash
-npm run dev
-# Open http://localhost:3000
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-### Build & Test
+## Commands
 
-```bash
-# Build for production
-npm run build
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production (runs tests automatically) |
+| `npm run preview` | Preview production build |
+| `npm run test:e2e` | Run Playwright tests |
+| `npm run gen:images` | Generate optimized AVIF/WebP images |
 
-# This automatically runs E2E tests after build (postbuild script)
-# npm run test:e2e runs separately
+## Project Structure
 
-# Preview the production build
-npm run preview
+```
+app/
+├── pages/
+│   ├── index.vue          # Homepage (hero, projects, about)
+│   ├── work.vue           # All projects listing
+│   ├── [...slug].vue      # Dynamic project pages
+│   └── contact.vue        # Contact page
+├── components/
+│   ├── AppHeader.vue      # Navigation
+│   ├── AppFooter.vue      # Footer
+│   ├── ProjectGrid.vue    # Homepage project grid
+│   ├── ProjectCard.vue    # Project card component
+│   └── HomeSlideshow.vue  # Hero background slideshow
+├── composables/
+│   ├── useOptimizedImage.ts  # Image optimization lookup
+│   └── usePageColors.ts      # Dynamic accent colors
+├── assets/css/main.css    # Global styles + transitions
+├── router.options.ts      # Page transition scroll fix
+└── app.vue                # Root component (transitions)
+
+content/
+├── homepage.md            # Homepage content
+└── work/                  # Project pages (markdown)
+    └── project-name.md
+
+public/images/             # Source images
+scripts/                   # Build scripts (image gen, etc.)
+tests/                     # Playwright E2E tests
 ```
 
-### Testing
+## Adding a Project
 
-```bash
-# Run E2E tests (tests automatically read markdown content)
-npm run test:e2e
-
-# Run Lighthouse audit
-BASE_URL=http://localhost:3000 npm run lighthouse
-
-# Generate optimized images
-npm run gen:images
-
-# Complete performance suite (gen:images → build → preview → coverage → lighthouse)
-npm run perf:e2e
-```
-
-## Content Management
-
-### Homepage
-
-The homepage is composed of:
-- **Hero Section**: Title and description from `content/homepage.md` with rotating background slideshow
-- **Project Grid**: Displays up to 6 latest work projects from `content/work/*` markdown files
-- **About Section**: Content from `content/homepage.md`
-
-### Adding a Work Page
-
-Create a file under `content/work/` with required frontmatter fields:
+Create `content/work/project-name.md`:
 
 ```markdown
 ---
 title: "Project Title"
-description: "Short description for listings and SEO"
-image: "/images/project.jpg"              # Card/content image
-headerImage: "/images/project-hero.jpg"   # Hero image (optional, defaults to image)
-year: 2024                                 # Displayed in project cards
-tags: ["theatre", "clown"]                # Display as pills (optional)
+description: "Short description"
+year: 2024
+image: "/images/project.jpg"
+headerImage: "/images/project-hero.jpg"  # optional
+tags: ["tag1", "tag2"]                   # optional
 ---
 
-# Project Name
-
-Your markdown content here...
+Your content here...
 ```
 
-**Note**: The H1 header in the markdown is automatically removed in favor of the `title` frontmatter field.
+Then add the image to `public/images/` and run:
+
+```bash
+npm run gen:images   # Generate optimized versions
+```
 
 ## Image Optimization
 
-### Workflow
+Images are automatically optimized to AVIF/WebP with responsive srcsets.
 
-1. **Add source images**:
-   - Portfolio images: `public/images/` (e.g., `new-project.jpg`)
-   - Slideshow images: `app/assets/images/home_slideshow/`
+1. Add source image to `public/images/`
+2. Run `npm run gen:images`
+3. Components automatically use optimized versions
 
-2. **Generate optimized variants**:
-   ```bash
-   npm run gen:images
-   ```
-   - Creates AVIF and WebP variants at sizes: 400px, 800px, 1200px, 1600px
-   - Generates mapping files:
-     - `app/assets/optimized-images.json`
-     - `public/images/optimized/images.json`
-
-3. **Components use mappings automatically** via the `resolveOptimizedImage` composable
-
-### Image Optimization Details
-
-- **Tool**: Sharp (command: `node scripts/image-gen.cjs`)
-- **Formats**: AVIF (primary), WebP (fallback), JPEG (browser fallback)
-- **Quality**: 80 (balanced quality/size)
-- **Color Extraction**: Uses `node-vibrant` to extract dominant colors
-- **Output**: Responsive srcsets with proper fallbacks
+Generated files:
+- `public/images/optimized/` (optimized images)
+- `app/assets/optimized-images.json` (mapping file)
 
 ## Testing
 
-### E2E Testing
+Tests verify site functionality without checking specific content:
 
-The project uses **Playwright** for comprehensive browser testing. Tests are configured to:
-- Auto-start the Nuxt dev server
-- Dynamically read markdown files from `content/work/*`
-- Never need hardcoded test data updates
-
-Run tests with:
 ```bash
 npm run test:e2e
 ```
 
-**Test Coverage**:
-- Homepage loads with expected content and structure
-- Project grid displays all work items with correct metadata
-- Navigation works across all pages
-- Individual project pages render correctly with hero images
-- Contact page loads properly
-- No broken images in the grid
+Tests check:
+- Pages render correctly
+- Navigation works
+- Images load
+- No console errors
 
-Tests automatically parse markdown frontmatter using the `gray-matter` library, so adding a new project automatically makes it testable.
+## Deployment
 
-### Running Tests on Vercel
+Configured for Vercel with static generation. Tests run automatically before deployment via `vercel.json`.
 
-Tests run automatically as part of the build pipeline via `vercel.json`:
-```json
-{
-  "buildCommand": "npm run build && npm run test:e2e"
-}
-```
+## Key Files Reference
 
-This ensures no broken deployments reach production.
-
-## Architecture
-
-### Tech Stack
-
-- **Framework**: Nuxt 4.2.2 (Vue 3.5.26, Vite 7.3.1)
-- **Styling**: Tailwind CSS 3 with custom animations
-- **Content**: Nuxt Content 3.10.0 (markdown with frontmatter)
-- **Testing**: Playwright 1.57.0
-- **Image Optimization**: Sharp 0.34.5
-- **Color Extraction**: node-vibrant 4.0.3
-- **YAML Parsing**: gray-matter 4.0.3
-- **Analytics**: PostHog (optional, client-side)
-- **Database**: SQLite (via better-sqlite3, internal to Nuxt Content)
-- **Hosting**: Vercel (static preset with pre-rendering)
-
-### Component Structure
-
-```
-app/
-├── components/
-│   ├── AppHeader.vue          # Navigation with dropdown menu
-│   ├── AppFooter.vue          # Footer
-│   ├── HomeSlideshow.vue      # Rotating background images
-│   ├── ProjectGrid.vue        # Homepage project listing
-│   ├── ProjectCard.vue        # Individual project card
-│   └── layouts/
-│       └── ProjectLayout.vue  # Project page layout
-├── pages/
-│   ├── index.vue              # Homepage
-│   ├── work.vue               # Work index
-│   ├── [...slug].vue          # Dynamic project pages
-│   └── contact.vue            # Contact page
-├── composables/
-│   ├── useOptimizedImage.ts   # Image optimization lookup
-│   ├── usePageColors.ts       # Dynamic hero colors
-│   └── usePostHog.js          # Analytics
-└── assets/
-    └── css/
-        └── main.css           # Global styles + fade transitions
-```
-
-### Page Transitions
-
-Smooth fade transitions between pages (0.35s, cubic-bezier easing):
-- Implemented in `app/app.vue` wrapping `<NuxtPage />`
-- CSS defined in `app/assets/css/main.css`
-- Uses CSS opacity transitions (no layout shift)
+| File | Purpose |
+|------|---------|
+| `nuxt.config.ts` | Nuxt configuration |
+| `tailwind.config.ts` | Tailwind theme (colors, fonts) |
+| `app/router.options.ts` | Scroll behavior during transitions |
+| `app/assets/css/main.css` | Global styles, transition CSS |
+| `playwright.config.ts` | Test configuration |
+| `vercel.json` | Deployment settings |
 
 ### Favicon
 

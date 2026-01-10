@@ -1,9 +1,19 @@
+/**
+ * Global Styles
+ * 
+ * Uses Tailwind CSS with custom theme defined in tailwind.config.ts
+ * Color scheme: Dark slate background with cyan accent (--color-primary)
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Page fade transition */
+  /**
+   * Page Fade Transition
+   * Used by <Transition name="fade"> in app.vue
+   * Duration must match TRANSITION_DURATION in router.options.ts
+   */
   .fade-enter-active, .fade-leave-active {
     transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -13,9 +23,14 @@
   .fade-enter-to, .fade-leave-from {
     opacity: 1;
   }
-  /* Default sophisticated cyan/teal color for homepage and work list */
+
+  /**
+   * Dynamic Primary Color
+   * Can be overridden per-page via usePageColors composable
+   * Default: Cyan/Teal (186° hue)
+   */
   :root {
-    --color-primary: 186 100% 50%; /* Cyan/Teal (HSL) */
+    --color-primary: 186 100% 50%;
   }
 
   body {
@@ -26,7 +41,7 @@
     @apply font-heading font-bold;
   }
 
-  /* Remove underline for heading anchor links inserted by the content renderer */
+  /* Prose (markdown) styling for dark mode */
   .prose h2 > a,
   .prose h3 > a,
   .prose h4 > a,
@@ -36,7 +51,6 @@
     @apply no-underline;
   }
 
-  /* Improve visibility of prose links and code in dark mode */
   .prose a {
     @apply text-primary font-medium hover:underline;
   }

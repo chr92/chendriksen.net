@@ -1,3 +1,13 @@
+/**
+ * E2E Tests - Site Functionality
+ * 
+ * These tests verify the site works correctly after code changes.
+ * They are content-agnostic — they check structure and functionality,
+ * not specific text content.
+ * 
+ * Run with: npm run test:e2e
+ * Tests auto-start the dev server via playwright.config.ts
+ */
 import { test, expect } from '@playwright/test';
 
 test.describe('Site functionality', () => {
@@ -5,17 +15,17 @@ test.describe('Site functionality', () => {
   test('Homepage renders correctly', async ({ page }) => {
     await page.goto('/');
     
-    // Page structure exists
+    // Core page structure
     await expect(page.locator('h1').first()).toBeVisible();
     await expect(page.locator('header nav')).toBeVisible();
     await expect(page.locator('footer')).toBeVisible();
     
-    // Project grid renders with cards
+    // Project grid has cards
     const cards = page.locator('[data-testid="project-card"]');
     await expect(cards.first()).toBeVisible();
     expect(await cards.count()).toBeGreaterThan(0);
     
-    // No empty state shown
+    // No empty state
     await expect(page.locator('text=No work items found.')).toHaveCount(0);
   });
 
@@ -24,10 +34,12 @@ test.describe('Site functionality', () => {
     
     const cards = page.locator('[data-testid="project-card"]');
     const firstCardHref = await cards.first().getAttribute('href');
+    
+    // Cards should link to /work/* pages
     expect(firstCardHref).toBeTruthy();
     expect(firstCardHref).toMatch(/^\/work\//);
     
-    // Click first card and verify page loads
+    // Navigation works
     await cards.first().click();
     await expect(page).toHaveURL(/\/work\/.+/);
     await expect(page.locator('h1')).toBeVisible();
@@ -44,15 +56,15 @@ test.describe('Site functionality', () => {
   test('Navigation works', async ({ page }) => {
     await page.goto('/');
     
-    // Navigate to Work
+    // Work page
     await page.click('nav >> text=Work');
     await expect(page).toHaveURL(/\/work/);
     
-    // Navigate to Contact
+    // Contact page
     await page.click('nav >> text=Contact');
     await expect(page).toHaveURL('/contact');
     
-    // Navigate Home
+    // Home
     await page.click('nav >> text=Home');
     await expect(page).toHaveURL('/');
   });
@@ -69,7 +81,7 @@ test.describe('Site functionality', () => {
     const count = await images.count();
     expect(count).toBeGreaterThan(0);
     
-    // Verify each image has a src and loads successfully
+    // Each image is visible with valid src
     for (let i = 0; i < count; i++) {
       const img = images.nth(i);
       await expect(img).toBeVisible();
@@ -90,7 +102,7 @@ test.describe('Site functionality', () => {
     await page.goto('/work');
     await page.goto('/contact');
     
-    // Filter out known benign errors (like favicon 404 in dev)
+    // Filter benign errors
     const realErrors = errors.filter(e => !e.includes('favicon'));
     expect(realErrors).toHaveLength(0);
   });
