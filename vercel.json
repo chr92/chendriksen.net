@@ -1,0 +1,4 @@
+{
+  "buildCommand": "npm run build && npm run test:e2e",
+  "outputDirectory": ".vercel/output/static"
+}
