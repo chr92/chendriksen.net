@@ -19,7 +19,11 @@ export default <RouterConfig>{
       setTimeout(() => {
         // Handle hash links (e.g., /#about)
         if (to.hash) {
-          resolve({ el: to.hash, behavior: 'smooth' })
+          resolve({ 
+            el: to.hash, 
+            behavior: 'smooth',
+            top: 80 // Offset for fixed header (h-16 = 64px + some padding)
+          })
           return
         }
         // Use saved position for back/forward, otherwise scroll to top
