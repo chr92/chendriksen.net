@@ -1,8 +1,8 @@
-import { allWork } from 'contentlayer/generated'
+import { allWorks } from 'contentlayer/generated'
 import Link from 'next/link'
 
 export default function WorkIndex() {
-  const projects = [...allWork].sort((a, b) => (b.year || 0) - (a.year || 0))
+  const projects = [...allWorks].sort((a, b) => (b.year || 0) - (a.year || 0))
   return (
     <div className="container mx-auto px-6 py-12">
       <h1 className="text-3xl font-bold mb-6">Work</h1>

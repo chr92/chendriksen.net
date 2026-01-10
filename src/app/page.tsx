@@ -1,10 +1,10 @@
-import { allWork, allHome } from 'contentlayer/generated'
+import { allHomes } from 'contentlayer/generated'
 import Link from 'next/link'
 import ProjectGrid from '../components/ProjectGrid'
 import HomeSlideshow from '../components/HomeSlideshow'
 
 export default function HomePage() {
-  const home = allHome[0]
+  const home = allHomes[0]
   return (
     <div className="relative">
       <HomeSlideshow />
