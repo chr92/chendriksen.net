@@ -8,11 +8,11 @@ const sharp = require('sharp')
 
 
 const publicImagesDir = path.resolve(__dirname, '../public/images')
-const slideshowDir = path.resolve(__dirname, '../app/assets/images/home_slideshow')
+const slideshowDir = path.resolve(__dirname, '../public/images/home_slideshow')
 const outDir = path.resolve(__dirname, '../public/images/optimized')
-const assetMappingPath = path.resolve(__dirname, '../app/assets/optimized-images.json')
+const assetMappingPath = path.resolve(__dirname, '../src/app/assets/optimized-images.json')
 const publicMappingPath = path.resolve(outDir, 'images.json')
-const colorDataPath = path.resolve(__dirname, '../app/assets/image-colors.json')
+const colorDataPath = path.resolve(__dirname, '../src/app/assets/image-colors.json')
 
 const widths = [400, 800, 1200, 1600]
 const formats = ['avif', 'webp']

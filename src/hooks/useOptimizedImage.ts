@@ -1,4 +1,4 @@
-import optimized from '../../app/assets/optimized-images.json'
+import optimized from '../app/assets/optimized-images.json'
 
 export type ImageMapping = {
   avif: string

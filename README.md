@@ -15,7 +15,7 @@ This repo stores site content as Markdown files under the `content/` folder. Fol
 
 - Homepage content
   - The homepage components live under `src/components/` (e.g. `HomeSlideshow.tsx`, `ProjectGrid.tsx`).
-  - The slideshow uses images from `app/assets/images/home_slideshow/` and the generator will create optimized variants under `public/images/optimized/home_slideshow/` when you run `npm run gen:images`.
+  - The slideshow uses images from `public/images/home_slideshow/` and the generator will create optimized variants under `public/images/optimized/home_slideshow/` when you run `npm run gen:images`.
 
 - Adding a `work` page
   - Create a file under `content/work/` (e.g. `content/work/new-project.md`).
@@ -58,8 +58,8 @@ queryCollection('content')
 ## Images & optimized assets
 
 - Image workflow
-  1. Add source images to `public/images/` (or `app/assets/images/home_slideshow/` for slideshow slides).
-  2. Run `npm run gen:images` to generate AVIF/WebP variants and a mapping file at `app/assets/optimized-images.json`.
+  1. Add source images to `public/images/` (or `public/images/home_slideshow/` for slideshow slides).
+  2. Run `npm run gen:images` to generate AVIF/WebP variants and a mapping file at `src/app/assets/optimized-images.json`.
   3. Components import the mapping and automatically use `srcset` + fallback when a mapping exists.
 
 - Mapping keys
@@ -71,7 +71,7 @@ queryCollection('content')
   - Run the dev server with `npm run dev` and open `http://localhost:3000`.
 
 - Generating optimized images
-  - `npm run gen:images` (uses Sharp). Output files are written to `public/images/optimized/` and the JSON mapping is updated at `app/assets/optimized-images.json`.
+  - `npm run gen:images` (uses Sharp). Output files are written to `public/images/optimized/` and the JSON mapping is updated at `src/app/assets/optimized-images.json`.
   - As a convenience, commit generated optimized assets to the repo if your host doesn't run the generator during deploy.
 
 - Build & preview
@@ -147,9 +147,9 @@ npm run gen:images
 
 Generated files:
 - `public/images/optimized/*` (AVIF/WebP/fallback images)
-- `public/images/optimized/images.json` and `app/assets/optimized-images.json` (mapping used by components)
+- `public/images/optimized/images.json` and `src/app/assets/optimized-images.json` (mapping used by components)
 
-Notes: the image generator uses `sharp` and outputs sizes at 400, 800, 1200, 1600 px (quality 80). Import the mapping from `app/assets/optimized-images.json` in components to use AVIF/WebP `srcset`s and fallbacks.
+Notes: the image generator uses `sharp` and outputs sizes at 400, 800, 1200, 1600 px (quality 80). Import the mapping from `src/app/assets/optimized-images.json` in components to use AVIF/WebP `srcset`s and fallbacks.
 
 - Run the Puppeteer CSS & image coverage report (manual steps):
 

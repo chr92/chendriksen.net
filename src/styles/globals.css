@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Import legacy site CSS so styles are preserved initially */
-@import "../../app/assets/css/main.css";
+@import "../app/assets/css/main.css";
 
 :root {
   --container-width: 1200px;
