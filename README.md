@@ -58,41 +58,39 @@ headerImage: "/images/my-project-hero.jpg"  # optional, uses image if not set
 Your content here...
 ```
 
-3. Push to `main` — images are automatically optimized during deployment
+3. Commit and push to `main` — images are automatically optimized during deployment
 
 ### New Slideshow Image
 
 Add images to the homepage background slideshow:
 
 1. Add your image to `app/assets/images/home_slideshow/`
-2. Push to `main` — automatically included and optimized
+2. Commit and push to `main`
 
 The slideshow auto-discovers all images in that folder.
 
 ### Image Optimization
 
-Images are automatically optimized to AVIF/WebP during CI/CD when new images are detected. To preview optimized images locally:
+Images are automatically optimized during Vercel deployment. To preview optimized images locally:
 
 ```bash
 npm run gen:images
 ```
 
+This creates AVIF/WebP versions at multiple sizes in `public/images/optimized/`.
+
 ## Deployment
 
-Deploys automatically via GitHub Actions when you push to `main`.
+Deploys automatically via Vercel when you push to `main`. GitHub Actions runs E2E tests in parallel.
 
 ### CI/CD Workflow
 
-| Changes | Tests | Image Gen | Deploy |
-|---------|-------|-----------|--------|
-| Only markdown files | ⏭️ Skip | ⏭️ Skip | ✅ Yes |
-| Code changes | ✅ Run | ⏭️ Skip | ✅ If pass |
-| New images | ✅ Run | ✅ Run | ✅ If pass |
+| Changes | Tests | Deploy |
+|---------|-------|--------|
+| Only markdown/content files | ⏭️ Skip | ✅ Yes |
+| Code changes | ✅ Run | ✅ Yes |
 
-### Setup
-
-1. Add `VERCEL_TOKEN` secret in GitHub repo settings
-2. Run `vercel link` locally once to connect to your Vercel project
+Tests run via GitHub Actions. Vercel deploys independently (doesn't wait for tests).
 
 ## Key Files
 

@@ -1,7 +1,4 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".vercel/output/static",
-  "git": {
-    "deploymentEnabled": false
-  }
+  "buildCommand": "npm run gen:images && npm run build",
+  "outputDirectory": ".vercel/output/static"
 }

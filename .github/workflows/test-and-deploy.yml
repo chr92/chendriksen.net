@@ -1,9 +1,8 @@
-# Test and Deploy Workflow
+# Test Workflow
 # - Skips tests if only markdown/content files changed
-# - Runs image optimization automatically when images change
-# - Deploys to Vercel after tests pass (or directly for content-only changes)
+# - Vercel handles deployment automatically via its GitHub integration
 
-name: Test and Deploy
+name: Tests
 
 on:
   push:
@@ -18,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       needs_tests: ${{ steps.filter.outputs.needs_tests }}
-      needs_images: ${{ steps.filter.outputs.needs_images }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,23 +36,18 @@ jobs:
           echo "$CHANGED"
           
           NEEDS_TESTS="false"
-          NEEDS_IMAGES="false"
           
           while IFS= read -r file; do
             [ -z "$file" ] && continue
             
-            if [[ "$file" == public/images/* ]] || [[ "$file" == app/assets/images/* ]]; then
-              NEEDS_IMAGES="true"
-            fi
-            
+            # Only skip tests if ALL changes are content/markdown files
             if [[ "$file" != content/* ]] && [[ "$file" != *.md ]]; then
               NEEDS_TESTS="true"
             fi
           done <<< "$CHANGED"
           
           echo "needs_tests=$NEEDS_TESTS" >> $GITHUB_OUTPUT
-          echo "needs_images=$NEEDS_IMAGES" >> $GITHUB_OUTPUT
-          echo "Needs tests: $NEEDS_TESTS, Needs images: $NEEDS_IMAGES"
+          echo "Needs tests: $NEEDS_TESTS"
 
   test:
     name: Run E2E Tests
@@ -90,37 +83,3 @@ jobs:
           path: playwright-report/
           retention-days: 7
 
-  deploy:
-    name: Deploy to Vercel
-    needs: [changes, test]
-    runs-on: ubuntu-latest
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.test.result == 'success' || needs.test.result == 'skipped')
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci --loglevel=error
-
-      - name: Generate optimized images
-        if: needs.changes.outputs.needs_images == 'true'
-        run: npm run gen:images
-
-      - name: Install Vercel CLI
-        run: npm install -g vercel
-
-      - name: Pull Vercel environment
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build project
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
