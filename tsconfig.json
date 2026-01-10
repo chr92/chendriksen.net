@@ -14,6 +14,12 @@
     "esModuleInterop": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "baseUrl": ".",
+    "paths": {
+      "contentlayer/generated": [
+        "./.contentlayer/generated"
+      ]
+    },
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",

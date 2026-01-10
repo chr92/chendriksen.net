@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react'
 import { resolveOptimizedImage } from '../hooks/useOptimizedImage'
 import { usePageColors } from '../hooks/usePageColors'

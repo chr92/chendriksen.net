@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import ProjectCard from './ProjectCard'
-import { allWork } from 'contentlayer/generated'
+import { allWorks } from 'contentlayer/generated'
 
 export default function ProjectGrid() {
-  const projects = [...allWork].sort((a, b) => (b.year || 0) - (a.year || 0)).slice(0, 6)
+  const projects = [...allWorks].sort((a, b) => (b.year || 0) - (a.year || 0)).slice(0, 6)
 
   return (
     <section className="py-24 bg-background">

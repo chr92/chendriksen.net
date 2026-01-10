@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "content:dev": "contentlayer dev",
-    "content:build": "contentlayer build",
+    "content:build": "node scripts/contentlayer-build.mjs",
     "dev": "next dev",
     "dev:all": "concurrently \"npm run content:dev\" \"npm run dev\"",
     "build": "npm run content:build && next build",
@@ -29,7 +29,6 @@
     "postcss": "^8.4.27",
     "@tailwindcss/typography": "^0.5.19",
     "@types/react": "^18.2.21",
-    "eslint": "^8.36.0",
     "sharp": "^0.34.5",
     "concurrently": "^8.0.1"
   }
