@@ -26,14 +26,14 @@ function isAlreadyProcessed(srcPath, relativeOutDir) {
   const name = path.basename(srcPath, path.extname(srcPath))
   const outSubdir = path.join(outDir, relativeOutDir || '')
   
-  // Check if the smallest AVIF exists (quick check)
-  const checkFile = path.join(outSubdir, `${name}-400.avif`)
-  if (!fs.existsSync(checkFile)) return false
-  
-  // Check if source is newer than output
-  const srcStat = fs.statSync(srcPath)
-  const outStat = fs.statSync(checkFile)
-  return srcStat.mtime <= outStat.mtime
+  // Check if all output files exist
+  for (const f of formats) {
+    for (const w of widths) {
+      const checkFile = path.join(outSubdir, `${name}-${w}.${f}`)
+      if (!fs.existsSync(checkFile)) return false
+    }
+  }
+  return true
 }
 
 // Get existing mapping entry without reprocessing
