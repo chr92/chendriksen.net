@@ -6,6 +6,8 @@
 .cache
 .vercel
 dist
+.next
+.contentlayer
 
 # Node dependencies
 node_modules
