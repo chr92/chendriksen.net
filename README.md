@@ -102,11 +102,27 @@ Tests check:
 
 ## Deployment
 
-Configured for Vercel with static generation. Run tests locally before deploying:
+Deploys automatically via GitHub Actions when you push to `main`.
 
-```bash
-npm run test:e2e && npm run build
-```
+### CI/CD Workflow
+
+The workflow is smart about what it runs:
+
+| Changes | Tests | Image Gen | Deploy |
+|---------|-------|-----------|--------|
+| Only markdown/content files | ⏭️ Skip | ⏭️ Skip | ✅ Yes |
+| Code changes (`.vue`, `.ts`, etc.) | ✅ Run | ⏭️ Skip | ✅ If pass |
+| New/changed images | ✅ Run | ✅ Run | ✅ If pass |
+
+This means:
+- **Content updates** (new projects, text edits) deploy instantly without waiting for tests
+- **Code changes** always run tests before deploying
+- **New images** are automatically optimized during deployment
+
+### Setup Requirements
+
+1. `VERCEL_TOKEN` secret in GitHub repo settings (for deployment)
+2. Vercel project linked (run `vercel link` locally once)
 
 ## Key Files Reference
 
@@ -118,6 +134,7 @@ npm run test:e2e && npm run build
 | `app/assets/css/main.css` | Global styles, transition CSS |
 | `playwright.config.ts` | Test configuration |
 | `vercel.json` | Deployment settings |
+| `.github/workflows/test-and-deploy.yml` | CI/CD workflow |
 
 ### Favicon
 

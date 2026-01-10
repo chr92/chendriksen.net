@@ -1,5 +1,7 @@
 # Test and Deploy Workflow
-# Runs Playwright E2E tests on push to main, then deploys to Vercel if tests pass
+# - Skips tests if only markdown/content files changed
+# - Runs image optimization automatically when images change
+# - Deploys to Vercel after tests pass (or directly for content-only changes)
 
 name: Test and Deploy
 
@@ -10,10 +12,56 @@ on:
     branches: [main]
 
 jobs:
+  # Check what files changed to determine if we need tests
+  changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      needs_tests: ${{ steps.filter.outputs.needs_tests }}
+      needs_images: ${{ steps.filter.outputs.needs_images }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check changed files
+        id: filter
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            CHANGED=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.sha }})
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+          fi
+          
+          echo "Changed files:"
+          echo "$CHANGED"
+          
+          NEEDS_TESTS="false"
+          NEEDS_IMAGES="false"
+          
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            
+            if [[ "$file" == public/images/* ]] || [[ "$file" == app/assets/images/* ]]; then
+              NEEDS_IMAGES="true"
+            fi
+            
+            if [[ "$file" != content/* ]] && [[ "$file" != *.md ]]; then
+              NEEDS_TESTS="true"
+            fi
+          done <<< "$CHANGED"
+          
+          echo "needs_tests=$NEEDS_TESTS" >> $GITHUB_OUTPUT
+          echo "needs_images=$NEEDS_IMAGES" >> $GITHUB_OUTPUT
+          echo "Needs tests: $NEEDS_TESTS, Needs images: $NEEDS_IMAGES"
+
   test:
     name: Run E2E Tests
+    needs: changes
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: needs.changes.outputs.needs_tests == 'true'
 
     steps:
       - name: Checkout code
@@ -44,9 +92,9 @@ jobs:
 
   deploy:
     name: Deploy to Vercel
-    needs: test
+    needs: [changes, test]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.test.result == 'success' || needs.test.result == 'skipped')
 
     steps:
       - name: Checkout code
@@ -57,6 +105,13 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --loglevel=error
+
+      - name: Generate optimized images
+        if: needs.changes.outputs.needs_images == 'true'
+        run: npm run gen:images
 
       - name: Install Vercel CLI
         run: npm install -g vercel
