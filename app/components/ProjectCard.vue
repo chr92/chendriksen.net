@@ -24,7 +24,7 @@ const imageMapping = computed(() => (imageKey.value ? optimized[imageKey.value] 
 </script>
 
 <template>
-  <NuxtLink :to="path" class="group relative block overflow-hidden rounded-lg bg-surface">
+  <NuxtLink :to="path" class="group relative block overflow-hidden rounded-lg bg-surface" :data-testid="'project-card'">
     <!-- Image -->
     <div class="aspect-[3/4] w-full overflow-hidden">
         <picture v-if="imageMapping">

@@ -1,0 +1,18 @@
+# Playwright tests on Vercel
+
+# 1. Install dependencies
+# 2. Build the Nuxt app
+# 3. Start the Nuxt preview server in the background
+# 4. Run Playwright tests against the preview server
+
+install:
+  - npm ci
+
+build:
+  - npm run build
+
+# Vercel will run this after build, before deploy
+postbuild:
+  - npm run preview &
+  - npx wait-on http://localhost:3000
+  - npm run test:e2e
