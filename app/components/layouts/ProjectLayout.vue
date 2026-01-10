@@ -60,14 +60,9 @@ onMounted(() => {
       
       <div class="container relative flex h-full items-end pb-12">
         <div class="max-w-4xl">
-            <div class="mb-4 flex flex-wrap items-center gap-3">
-                <span v-if="page.meta?.year || page.year" class="rounded-full bg-primary/40 px-4 py-1.5 text-sm font-bold text-white backdrop-blur-sm border border-primary/60">
-                    {{ page.meta?.year || page.year }}
-                </span>
-                <span v-for="tag in page.tags" :key="tag" class="rounded-full bg-primary/30 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm border border-primary/50">
-                    {{ tag }}
-                </span>
-            </div>
+            <span v-if="page.meta?.year || page.year" class="mb-4 inline-block rounded-full bg-primary/40 px-4 py-1.5 text-sm font-bold text-white backdrop-blur-sm border border-primary/60">
+                {{ page.meta?.year || page.year }}
+            </span>
             <h1 class="font-heading text-5xl font-bold text-white sm:text-6xl md:text-7xl">{{ page.title }}</h1>
             <p v-if="page.description" class="mt-4 text-xl text-gray-200">{{ page.description }}</p>
         </div>

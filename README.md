@@ -53,7 +53,6 @@ description: "Short description"
 year: 2024
 image: "/images/my-project.jpg"
 headerImage: "/images/my-project-hero.jpg"  # optional, uses image if not set
-tags: ["tag1", "tag2"]                      # optional
 ---
 
 Your content here...
