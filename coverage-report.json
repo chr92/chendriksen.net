@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-01-08T08:38:05.224Z",
-  "baseUrl": "http://localhost:61900",
+  "generatedAt": "2026-01-10T09:29:06.305Z",
+  "baseUrl": "http://localhost:3000",
   "pages": [
     "/",
     "/work",
@@ -13,24 +13,25 @@
     "/work/werewolves-of-london"
   ],
   "css": {
-    "totalBytes": 480906,
-    "usedBytes": 121696,
-    "unusedBytes": 359210,
-    "unusedPercent": 74.69
+    "totalBytes": 2573847,
+    "usedBytes": 0,
+    "unusedBytes": 2573847,
+    "unusedPercent": 100
   },
   "images": {
     "totalPublicImages": 7,
     "unusedImages": [
-      "christiaan.jpg"
+      "bigzeusposter.png",
+      "christiaan.jpg",
+      "jazzman.jpg",
+      "philippe.jpg",
+      "treeeeee-logo.jpg",
+      "waitingforfreedom.jpg",
+      "werewolvesoflondon.jpg"
     ]
   },
   "requestedImages": [
-    "http://localhost:61900/_nuxt/vaudeville.Cb_3x276.jpg",
-    "http://localhost:61900/images/philippe.jpg",
-    "http://localhost:61900/images/bigzeusposter.png",
-    "http://localhost:61900/images/jazzman.jpg",
-    "http://localhost:61900/images/treeeeee-logo.jpg",
-    "http://localhost:61900/images/waitingforfreedom.jpg",
-    "http://localhost:61900/images/werewolvesoflondon.jpg"
+    "http://localhost:3000/_nuxt/assets/images/home_slideshow/vaudeville.jpg",
+    "http://localhost:3000/_nuxt/@id/virtual:public?%2Fimages%2Fchristiaan.jpg"
   ]
 }
