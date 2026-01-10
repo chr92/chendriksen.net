@@ -17,8 +17,8 @@ export function usePageColors() {
   const applyColors = (imagePath: string) => {
     if (!imagePath || typeof document === 'undefined') return
 
-    // Extract filename from path
-    const filename = imagePath.split('/').pop() || ''
+    // Extract filename without extension from path (e.g., '/images/hero.jpg' -> 'hero')
+    const filename = imagePath.split('/').pop()?.replace(/\.[^/.]+$/, '') || ''
     const colors = colorData[filename as keyof typeof colorData]
 
     if (colors) {

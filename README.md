@@ -14,7 +14,7 @@ npm run dev          # http://localhost:3000
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production (runs tests automatically) |
+| `npm run build` | Build for production |
 | `npm run preview` | Preview production build |
 | `npm run test:e2e` | Run Playwright tests |
 | `npm run gen:images` | Generate optimized AVIF/WebP images |
@@ -102,7 +102,11 @@ Tests check:
 
 ## Deployment
 
-Configured for Vercel with static generation. Tests run automatically before deployment via `vercel.json`.
+Configured for Vercel with static generation. Run tests locally before deploying:
+
+```bash
+npm run test:e2e && npm run build
+```
 
 ## Key Files Reference
 

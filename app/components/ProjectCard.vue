@@ -34,20 +34,18 @@ const imageMapping = computed(() => (imageKey.value ? optimized[imageKey.value] 
         </picture>
         <img v-else :src="imageUrl" :alt="title" class="h-full w-full object-cover transition-transform duration-700 will-change-transform group-hover:scale-110" loading="lazy" decoding="async"/>
         <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
     </div>
 
-    <!-- Content Slide-up -->
-    <div class="absolute inset-0 flex flex-col justify-end p-6 opacity-0 transition-all duration-500 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+    <!-- Always-visible title at bottom -->
+    <div class="absolute inset-x-0 bottom-0 p-4 sm:p-6">
         <div class="relative z-10">
-            <div v-if="year" class="mb-3 flex items-center gap-2">
-              <span class="text-xs font-bold uppercase tracking-wider text-white bg-primary/50 px-2.5 py-1 rounded-full">{{ year }}</span>
-              <div class="h-px flex-1 bg-primary/60"></div>
+            <div v-if="year" class="mb-2 inline-block">
+              <span class="text-xs font-bold uppercase tracking-wider text-white/80">{{ year }}</span>
             </div>
-            <span v-if="role" class="mb-2 block text-xs font-bold uppercase tracking-wider text-primary">{{ role }}</span>
-            <h3 class="mb-1 text-2xl font-bold text-white">{{ title }}</h3>
-            <p class="line-clamp-2 text-sm text-gray-200">{{ description }}</p>
+            <h3 class="text-xl font-bold text-white sm:text-2xl">{{ title }}</h3>
+            <!-- Description shown on hover (desktop) -->
+            <p class="mt-1 line-clamp-2 text-sm text-gray-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100 hidden sm:block">{{ description }}</p>
         </div>
     </div>
   </NuxtLink>
