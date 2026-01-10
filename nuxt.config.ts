@@ -12,6 +12,14 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   
+  // Runtime config for environment variables
+  runtimeConfig: {
+    public: {
+      // Web3Forms access key (safe to be public - it's a client-side form)
+      web3formsKey: '574d5665-8a48-4ec1-adac-edc4968dd8ed',
+    }
+  },
+  
   // Modules: Content (markdown), Tailwind (styles), Google Fonts
   modules: ['@nuxt/content', '@nuxtjs/tailwindcss', '@nuxtjs/google-fonts'],
   

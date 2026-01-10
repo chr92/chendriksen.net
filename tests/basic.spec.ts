@@ -88,6 +88,20 @@ test.describe('Site functionality', () => {
     await expect(page.locator('h1')).toBeVisible();
   });
 
+  test('Contact form renders correctly', async ({ page }) => {
+    await page.goto('/contact');
+    
+    // Form elements are present
+    await expect(page.locator('form')).toBeVisible();
+    await expect(page.locator('input[name="name"]')).toBeVisible();
+    await expect(page.locator('input[name="email"]')).toBeVisible();
+    await expect(page.locator('textarea[name="message"]')).toBeVisible();
+    await expect(page.locator('button[type="submit"]')).toBeVisible();
+    
+    // hCaptcha container is present
+    await expect(page.locator('.h-captcha')).toBeVisible();
+  });
+
   test('Images load without errors', async ({ page }) => {
     await page.goto('/');
     
