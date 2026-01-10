@@ -1,7 +1,7 @@
 ---
 title: "Christiaan Hendriksen"
 hero_title: "Hi, I'm Christiaan"
-description: "Comedian, director, and clown based in Kent, UK"
+description: "Comedian, director, and clown"
 ---
 
 Christiaan Hendriksen is an award-winning comedian and director based in Broadstairs, Kent. A graduate of the prestigious Ecole Philippe Gaulier in Paris, France and The Free Association in London, Christiaan has honed his craft under the tutelage of some of the most celebrated figures in contemporary clowning and comedy, including Spymonkey, Carlo Jacucci, Mick Barnfather, Deanna Fleysher and Viggo Venn.
