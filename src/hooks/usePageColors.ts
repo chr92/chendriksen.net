@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import colorData from '../../app/assets/image-colors.json'
+import colorData from '../app/assets/image-colors.json'
 
 export function usePageColors(heroImagePath?: string | null) {
   useEffect(() => {
