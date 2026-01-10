@@ -1,6 +1,26 @@
 
 import { test, expect } from '@playwright/test';
-import { workProjects as latestProjects } from './workProjects.js';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
+// Dynamically load all work project frontmatter from markdown files
+function getWorkProjects() {
+  const dir = path.resolve(__dirname, '../content/work');
+  const files = fs.readdirSync(dir).filter(f => f.endsWith('.md'));
+  return files.map(filename => {
+    const file = fs.readFileSync(path.join(dir, filename), 'utf-8');
+    const { data } = matter(file);
+    return {
+      title: data.title,
+      year: String(data.year),
+      description: data.description,
+      slug: filename.replace(/\.md$/, ''),
+    };
+  });
+}
+
+const latestProjects = getWorkProjects();
 
 test.describe('Site basic functionality', () => {
   test('Homepage loads with expected content', async ({ page }) => {
@@ -40,15 +60,6 @@ test.describe('Site basic functionality', () => {
   });
 
   test('Individual work pages render correctly', async ({ page }) => {
-    // Map project titles to expected slugs (from markdown filenames)
-    const projectSlugs = {
-      'Waiting For Freedom': 'waiting-for-freedom',
-      'Treeeee': 'treeee',
-      'Werewolves of London': 'werewolves-of-london',
-      'Big Zeus Energy': 'big-zeus-energy',
-      'An Interview with Philippe Gaulier': 'an-interview-with-philippe-gaulier',
-      'The Jazz Man': 'the-jazz-man',
-    };
     for (const project of latestProjects) {
       await page.goto('/');
       // Find the card with an exact title and year match
@@ -60,7 +71,7 @@ test.describe('Site basic functionality', () => {
         if (cardText.includes(project.title) && cardText.includes(project.year)) {
           foundHref = await card.getAttribute('href');
           // Ensure href matches expected slug
-          if (foundHref && foundHref.includes(projectSlugs[project.title])) {
+          if (foundHref && foundHref.includes(project.slug)) {
             break;
           }
         }
