@@ -69,6 +69,20 @@ test.describe('Site functionality', () => {
     await expect(page).toHaveURL('/');
   });
 
+  test('About link scrolls to about section', async ({ page }) => {
+    await page.goto('/');
+    
+    // Click the About link in the nav
+    await page.click('nav >> text=About');
+    
+    // URL should have the hash
+    await expect(page).toHaveURL('/#about');
+    
+    // About section should be visible
+    const aboutSection = page.locator('#about');
+    await expect(aboutSection).toBeVisible();
+  });
+
   test('Contact page loads', async ({ page }) => {
     await page.goto('/contact');
     await expect(page.locator('h1')).toBeVisible();

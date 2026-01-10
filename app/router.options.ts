@@ -17,6 +17,11 @@ export default <RouterConfig>{
   scrollBehavior(to, from, savedPosition) {
     return new Promise((resolve) => {
       setTimeout(() => {
+        // Handle hash links (e.g., /#about)
+        if (to.hash) {
+          resolve({ el: to.hash, behavior: 'smooth' })
+          return
+        }
         // Use saved position for back/forward, otherwise scroll to top
         resolve(savedPosition || { top: 0, left: 0 })
       }, TRANSITION_DURATION)

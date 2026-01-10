@@ -1,10 +1,15 @@
 <script setup lang="ts">
 // Fetch content from 'homepage.md' to populate both the Hero and About sections.
 // This file serves as the single source of truth for the homepage text.
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 import heroImage from '~/assets/images/home_slideshow/vaudeville.jpg'
+import { usePageColors } from '~/composables/usePageColors'
 
 const { data: page } = await useAsyncData('home-content', () => queryCollection('content').path('/homepage').first())
+
+// Reset colors to default cyan when returning to homepage
+const { resetColors } = usePageColors()
+onMounted(() => resetColors())
 
 // Preload the primary hero image for better LCP
 useHead({
