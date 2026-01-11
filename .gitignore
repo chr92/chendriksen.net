@@ -52,6 +52,12 @@ Desktop.ini
 coverage/
 coverage-report.json
 lighthouse-report.json
+test-results*/
+
+# Generated files
+app/assets/image-colors.json
+app/assets/optimized-images.json
+public/images/optimized/images.json
 
 # Misc
 *.tsbuildinfo
